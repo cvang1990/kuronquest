@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<!-- Compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+	<!-- Compiled and minified JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<!-- CSV to JSON -->
+	<!-- REQUIRED -->
+	<script src="https://cdn.rawgit.com/Keyang/node-csvtojson/d41f44aa/browser/csvtojson.min.js"></script>
+
+<body>
+	<main>
+
+	</main>
+	<script type="text/javascript">
+		// [1] URL to the spreadsheet
+		let url = "https://docs.google.com/spreadsheets/d/1aTyNDibWsFQvNRUaCXVcXgTkYJrT_F7GALz9GSKEXGU/export?format=csv";
+		// let abilities = new array();
+
+		// [2] Set up location where you want it to land in the page
+		const main = document.querySelector("main");
+
+		// [3] fetch URL and set it text --- ["csvtext" is the whole table]
+		fetch(url).then(result=>result.text()).then(function(csvtext) {
+			// [4] return it as csv
+			return csv().fromString(csvtext);
+		}).then(function(csv) {
+			// [5] loop through each row in google sheets
+			csv.forEach(function(row) {
+				if ((row.weakness) != "x") {
+					main.innerHTML += "<h3>" + row.name + "</h3>";
+					main.innerHTML += "<h4>" + row.effect + "</h4>";
+				}
+			})
+		});
+
+
+ 	</script>
+
+	</body>
+
+</html>
