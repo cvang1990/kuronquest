@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html>
+	<!-- Compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+	<!-- Compiled and minified JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+<body>
+	<!-- TEXTS -->
+	<div class="row">
+		<h4 style="text-align: center">Player Tracker</h4>
+		<!-- ATTACK IMAGE & TEXT -->
+		<div class="col s6">
+			<h4 style="text-align: center; color: red">Attack</h4>
+			<img src="https://drive.google.com/uc?export=view&id=1I5LtJrJJeQ3OfzyPSxjnaNnxeT52djfW" alt="Attack" style="width: 25%; border-radius: 15px; display: block; margin-left: auto; margin-right: auto">
+		</div>
+		<!-- DEFENSE IMAGE & TEXT -->
+		<div class="col s6">
+			<h4 style="text-align: center; color: blue">Defense</h4>
+			<img src="https://drive.google.com/uc?export=view&id=1CAGJm7uHMXJ7xW6mLvjoZWGKHGhzIiQL" alt="Defense" style="width: 25%; border-radius: 15px; display: block; margin-left: auto; margin-right: auto">
+		</div>
+	</div>
+
+	<!-- ATTACK AND DEFENSE VIEWS -->
+	<div class="row">
+		<!-- ATTACK -->
+		<div class="col s6" style="border-radius: 20px; border-style: solid;">
+			<h1
+			style="text-align: center; vertical-align: middle; color: red; width: 100%;" id="attack">
+				1
+			</h1>
+		</div>
+		<!-- DEFENSE -->
+		<div class="col s6" style="border-radius: 20px; border-style: solid;">
+			<h1
+			style="text-align: center; vertical-align: middle; color: blue; width: 100%;" id="defense">
+				1
+			</h1>
+		</div>
+	</div>
+
+	<!-- BUTTONS -->
+	<div class="row">
+		<!-- MINUS ATTACK -->
+		<div class="col s3">
+			<button class="waves-effect waves-light btn" style="float: right; width: 50%; text-align: center" onclick="minusAttack(this)" type="button">-</button>
+		</div>
+		<!-- ADD ATTACK -->
+		<div class="col s3">
+			<button class="waves-effect waves-light btn" style="width: 50%; text-align: center" onclick="addAttack(this)" type="button">+</button>
+		</div>
+		<!-- MINUS DEFENSE -->
+		<div class="col s3">
+			<button class="waves-effect waves-light btn" style="float: right; width: 50%; text-align: center" onclick="minusDefense(this)" type="button">-</button>
+		</div>
+		<!-- ADD DEFENSE -->
+		<div class="col s3">
+			<button class="waves-effect waves-light btn" style="width: 50%; text-align: center" onclick="addDefense(this)" type="button">+</button>
+		</div>
+	</div>
+
+	<hr>
+
+	<div class="row">
+		<!-- LEVEL IMAGE & TEXT -->
+		<div class="col s3">
+			<h4 style="text-align: center">Level</h4>
+			<img src="https://drive.google.com/uc?export=view&id=148kXjQK8kJtrNUxrGwd2ZsjIXlaK65iI" alt="Level" style="width: 50%; border-radius: 15px; display: block; margin-left: auto; margin-right: auto">
+		</div>
+		<div class="col s2">
+
+		</div>
+		<!-- LEVEL VIEW -->
+		<div class="col s3" style="border-radius: 20px; border-style: solid;">
+			<h1
+			style="text-align: center; vertical-align: middle; width: 100%;" id="level">
+				1
+			</h1>
+		</div>
+		<!-- BUTTONS -->
+		<div class="col s4">
+			<!-- ADD LEVEL -->
+			<button class="waves-effect waves-light btn" style="width: 75%; text-align: center; float: right" onclick="addLevel(this)" type="button">+</button>
+			<br><br><br><br>
+			<!-- MINUS LEVEL -->
+			<button class="waves-effect waves-light btn" style="width: 75%; text-align: center; float: right" onclick="minusLevel(this)" type="button">-</button>
+		</div>
+	</div>
+
+	<hr>
+
+	<div class="row">
+		<!-- HONOR POINT IMAGE & TEXT -->
+		<div class="col s6">
+			<h4 style="text-align: center; color: green">Honor Points</h4>
+			<img src="https://drive.google.com/uc?export=view&id=1p8P_2HAaTPCVq8PnUDEmPZTq74QGvMdw" alt="Honor Points" style="width: 25%; border-radius: 15px; display: block; margin-left: auto; margin-right: auto">
+		</div>
+		<!-- LIFE POINT IMAGE & TEXT -->
+		<div class="col s6">
+			<h4 style="text-align: center; color: gray">Life</h4>
+			<img src="https://drive.google.com/uc?export=view&id=1vu_nH4L4P8QUwr8PmfWINIqop7oJcqK_" alt="Life Points" style="width: 25%; border-radius: 15px; display: block; margin-left: auto; margin-right: auto">
+		</div>
+	</div>
+
+	<!-- HP AND LIFE VIEWS -->
+	<div class="row">
+		<!-- HONOR POINTS -->
+		<div class="col s6" style="border-radius: 20px; border-style: solid;">
+			<h1
+			style="text-align: center; vertical-align: middle; color: green; width: 100%;" id="honorPoints">
+				0
+			</h1>
+		</div>
+		<!-- LIFE POINTS -->
+		<div class="col s6" style="border-radius: 20px; border-style: solid;">
+			<h1
+			style="text-align: center; vertical-align: middle; color: gray; width: 100%;" id="lifePoints">
+				6
+			</h1>
+		</div>
+	</div>
+
+	<!-- BUTTONS -->
+	<div class="row">
+		<!-- MINUS HONOR POINTS -->
+		<div class="col s3">
+			<button class="waves-effect waves-light btn" style="float: right; width: 50%; text-align: center" onclick="minusHonor(this)" type="button">-</button>
+		</div>
+		<!-- ADD HONOR POINTS -->
+		<div class="col s3">
+			<button class="waves-effect waves-light btn" style="width: 50%; text-align: center" onclick="addHonor(this)" type="button">+</button>
+		</div>
+		<!-- MINUS LIFE -->
+		<div class="col s3">
+			<button class="waves-effect waves-light btn" style="float: right; width: 50%; text-align: center" onclick="minusLife(this)" type="button">-</button>
+		</div>
+		<!-- ADD LIFE -->
+		<div class="col s3">
+			<button class="waves-effect waves-light btn" style="width: 50%; text-align: center" onclick="addLife(this)" type="button">+</button>
+		</div>
+	</div>
+
+	<hr>
+
+	<div class="row">
+		<!-- KERU COIN IMAGE & TEXT -->
+		<div class="col s3">
+			<h4 style="text-align: center">Keru Coins</h4>
+			<img src="https://drive.google.com/uc?export=view&id=1oWrr5OhitoSb1RZPeIRpdg26725opyJI" alt="Keru Coin" style="width: 50%; border-radius: 15px; display: block; margin-left: auto; margin-right: auto">
+		</div>
+		<div class="col s2">
+
+		</div>
+		<!-- KERU COIN VIEW -->
+		<div class="col s3" style="border-radius: 20px; border-style: solid;">
+			<h1
+			style="text-align: center; vertical-align: middle; width: 100%;" id="keru">
+				3
+			</h1>
+		</div>
+		<!-- BUTTONS -->
+		<div class="col s4">
+			<!-- ADD KERU COIN 5 -->
+			<!-- <button class="waves-effect waves-light btn" style="width: 75%; text-align: center; float: right" onclick="addKeru5(this)" type="button">+5</button> -->
+			<!-- ADD KERU COIN -->
+			<button class="waves-effect waves-light btn" style="width: 75%; text-align: center; float: right" onclick="addKeru(this)" type="button">+</button>
+			<br><br><br><br>
+			<!-- MINUS KERU COIN -->
+			<button class="waves-effect waves-light btn" style="width: 75%; text-align: center; float: right" onclick="minusKeru(this)" type="button">-</button>
+			<!-- MINUS KERU COIN 5 -->
+			<!-- <button class="waves-effect waves-light btn" style="width: 75%; text-align: center; float: right" onclick="minusKeru5(this)" type="button">-5</button> -->
+		</div>
+	</div>
+
+	<hr>
+
+	<!-- RESOURCE UNITS -->
+	<div class="row">
+		<div class="col s12" style="text-align: center;">
+			<h4>Resource Units</h4>
+			<img src="https://drive.google.com/uc?export=view&id=1S7SRV5uXEr38ITN5PvHOX7NUzcm-PVlS" alt="Crafting" style="width: 20%; border-radius: 15px; display: block; margin-left: auto; margin-right: auto">
+			<br>
+		</div>
+	</div>
+
+	<!-- METAL IMAGE & TEXT -->
+	<div class="row">
+		<div class="col s3">
+			<h4 style="text-align: center">Metal</h4>
+			<img src="https://drive.google.com/uc?export=view&id=1iIgcT-NfR9HbfSlJY_4L-WhBKaYYKNB6" alt="Metal" style="width: 40%; border-radius: 15px; display: block; margin-left: auto; margin-right: auto">
+		</div>
+
+		<!-- METAL VIEW -->
+		<div class="col s2"></div>
+		<div class="col s3" style="border-radius: 20px; border-style: solid;">
+			<h1
+			style="text-align: center; vertical-align: middle; width: 100%;" id="metal">
+				0
+			</h1>
+		</div>
+		<!-- BUTTONS -->
+		<div class="col s4">
+			<!-- ADD METAL -->
+			<button class="waves-effect waves-light btn" style="width: 75%; text-align: center; float: right" onclick="addMetal(this)" type="button">+</button>
+			<br><br><br><br>
+			<!-- MINUS METAL -->
+			<button class="waves-effect waves-light btn" style="width: 75%; text-align: center; float: right" onclick="minusMetal(this)" type="button">-</button>
+		</div>
+	</div>
+
+	<!-- STONE IMAGE & TEXT -->
+	<div class="row">
+		<div class="col s3">
+			<h4 style="text-align: center">Stone</h4>
+			<img src="https://drive.google.com/uc?export=view&id=1OOnvgwR1rBTpmYVKZOigBjBb4HLi2uHh" alt="Stone" style="width: 40%; border-radius: 15px; display: block; margin-left: auto; margin-right: auto">
+		</div>
+
+		<!-- STONE VIEW -->
+		<div class="col s2"></div>
+		<div class="col s3" style="border-radius: 20px; border-style: solid;">
+			<h1
+			style="text-align: center; vertical-align: middle; width: 100%;" id="stone">
+				0
+			</h1>
+		</div>
+		<!-- BUTTONS -->
+		<div class="col s4">
+			<!-- ADD STONE -->
+			<button class="waves-effect waves-light btn" style="width: 75%; text-align: center; float: right" onclick="addStone(this)" type="button">+</button>
+			<br><br><br><br>
+			<!-- MINUS STONE -->
+			<button class="waves-effect waves-light btn" style="width: 75%; text-align: center; float: right" onclick="minusStone(this)" type="button">-</button>
+		</div>
+	</div>
+
+	<!-- WOOD IMAGE & TEXT -->
+	<div class="row">
+		<div class="col s3">
+			<h4 style="text-align: center">Wood</h4>
+			<img src="https://drive.google.com/uc?export=view&id=1-gTtRe0TdDjzRB6Rghf2g5Pi5w2PD3ae" alt="Wood" style="width: 40%; border-radius: 15px; display: block; margin-left: auto; margin-right: auto">
+		</div>
+
+		<!-- WOOD VIEW -->
+		<div class="col s2"></div>
+		<div class="col s3" style="border-radius: 20px; border-style: solid;">
+			<h1
+			style="text-align: center; vertical-align: middle; width: 100%;" id="wood">
+				0
+			</h1>
+		</div>
+		<!-- BUTTONS -->
+		<div class="col s4">
+			<!-- ADD WOOD -->
+			<button class="waves-effect waves-light btn" style="width: 75%; text-align: center; float: right" onclick="addWood(this)" type="button">+</button>
+			<br><br><br><br>
+			<!-- MINUS WOOD -->
+			<button class="waves-effect waves-light btn" style="width: 75%; text-align: center; float: right" onclick="minusWood(this)" type="button">-</button>
+		</div>
+	</div>
+
+
+	<hr>
+
+
+	<!-- RESET BUTTON -->
+	<div class="row">
+		<div class="col s12" style="padding: 25px">
+			<button class="waves-effect waves-light btn red" style="width: 100%; text-align: center; margin: 15px" onclick="reset(this)" type="button">RESET ALL</button>
+		</div>
+	</div>
+
+	 <script type="text/javascript">
+	 	// ATTACK
+ 		const addAttack = control => {
+			let attack = document.getElementById("attack").textContent;
+			if (attack < 99) {
+				console.log("Adding 1 to attack.");
+				attack ++;
+			}
+			document.getElementById("attack").innerHTML = attack;
+ 		}
+
+ 		const minusAttack = control => {
+			let attack = document.getElementById("attack").textContent;
+			let level = document.getElementById("level").textContent;
+			if (attack > 1) {
+				console.log("Subtracting 1 from attack.");
+				attack --;
+			}
+			document.getElementById("attack").innerHTML = attack;
+ 		}
+
+		// DEFENSE
+ 		const addDefense = control => {
+			let defense = document.getElementById("defense").textContent;
+			if (defense < 99) {
+				console.log("Adding 1 to defense.");
+				defense ++;
+			}
+			document.getElementById("defense").innerHTML = defense;
+ 		}
+
+ 		const minusDefense = control => {
+			let defense = document.getElementById("defense").textContent;
+			let level = document.getElementById("level").textContent;
+			if (defense > 1) {
+				console.log("Subtracting 1 from defense.");
+				defense --;
+			}
+			document.getElementById("defense").innerHTML = defense;
+ 		}
+
+		// LEVEL
+		const addLevel = control => {
+
+			let level = document.getElementById("level").textContent;
+			if(level < 6){
+				console.log("Adding 1 to level.");
+				level ++;
+				addAttack();
+				addDefense();
+			}
+			document.getElementById("level").innerHTML = level;
+		}
+
+		const minusLevel = control => {
+			let level = document.getElementById("level").textContent;
+			if (level > 1) {
+				console.log("Subtracting 1 from level.");
+				level --;
+				minusAttack();
+				minusDefense();
+			}
+			document.getElementById("level").innerHTML = level;
+		}
+
+		// HONOR POINTS
+		const addHonor = control => {
+			console.log("Adding 1 to honor points.");
+			let honor = document.getElementById("honorPoints").textContent;
+			if (honor < 20) {
+				honor ++;
+			}
+			document.getElementById("honorPoints").innerHTML = honor;
+		}
+
+		const minusHonor = control => {
+			let honor = document.getElementById("honorPoints").textContent;
+			if (honor > 0) {
+				console.log("Subtracting 1 from honor points.");
+				honor --;
+			}
+			document.getElementById("honorPoints").innerHTML = honor;
+		}
+
+		// LIFE POINTS
+		const addLife = control => {
+			let life = document.getElementById("lifePoints").textContent;
+			if (life < 6) {
+				console.log("Adding 1 to life points.");
+				life ++;
+			}
+			document.getElementById("lifePoints").innerHTML = life;
+		}
+
+		const minusLife = control => {
+			let life = document.getElementById("lifePoints").textContent;
+			if (life > 0) {
+				console.log("Subtracting 1 from life points.");
+				life --;
+			}
+			document.getElementById("lifePoints").innerHTML = life;
+		}
+
+		// KERU COINS
+		const addKeru = control => {
+			let keru = document.getElementById("keru").textContent;
+			if (keru < 99) {
+				console.log("Adding 1 to keru coins.");
+				keru ++;
+			}
+			document.getElementById("keru").innerHTML = keru;
+		}
+
+		const minusKeru = control => {
+			let keru = document.getElementById("keru").textContent;
+			if (keru > 0) {
+				console.log("Subtracting 1 from keru coins.");
+				keru --;
+			}
+			document.getElementById("keru").innerHTML = keru;
+		}
+
+		//RESOURCE UNITS
+		//METAL
+		const addMetal = control => {
+			let metal = document.getElementById("metal").textContent;
+			if (metal < 99) {
+				console.log("Adding 1 to metal resource unit.");
+				metal ++;
+			}
+			document.getElementById("metal").innerHTML = metal;
+		}
+
+		const minusMetal = control => {
+			let metal = document.getElementById("metal").textContent;
+			if (metal > 0) {
+				console.log("Subtracting 1 from metal resource unit.");
+				metal --;
+			}
+			document.getElementById("metal").innerHTML = metal;
+		}
+
+		//STONE
+		const addStone = control => {
+			let stone = document.getElementById("stone").textContent;
+			if (stone < 99) {
+				console.log("Adding 1 to stone resource unit.");
+				stone ++;
+			}
+			document.getElementById("stone").innerHTML = stone;
+		}
+
+		const minusStone = control => {
+			let stone = document.getElementById("stone").textContent;
+			if (stone > 0) {
+				console.log("Subtracting 1 from stone resource unit.");
+				stone --;
+			}
+			document.getElementById("stone").innerHTML = stone;
+		}
+
+		//WOOD
+		const addWood = control => {
+			let wood = document.getElementById("wood").textContent;
+			if (wood < 99) {
+				console.log("Adding 1 to wood resource unit.");
+				wood ++;
+			}
+			document.getElementById("wood").innerHTML = wood;
+		}
+
+		const minusWood = control => {
+			let wood = document.getElementById("wood").textContent;
+			if (wood > 0) {
+				console.log("Subtracting 1 from wood resource unit.");
+				wood --;
+			}
+			document.getElementById("wood").innerHTML = wood;
+		}
+
+
+		// RESET ALL
+		const reset = control => {
+			let attack = 1;
+			let defense = 1;
+			let level = 1;
+			let honor = 0;
+			let life = 6;
+			let keru = 3;
+			let metal = 0;
+			let stone = 0;
+			let wood = 0;
+
+			document.getElementById("attack").innerHTML = attack;
+			document.getElementById("defense").innerHTML = defense;
+			document.getElementById("level").innerHTML = level;
+			document.getElementById("honorPoints").innerHTML = honor;
+			document.getElementById("lifePoints").innerHTML = life;
+			document.getElementById("keru").innerHTML = keru;
+			document.getElementById("metal").innerHTML = metal;
+			document.getElementById("stone").innerHTML = stone;
+			document.getElementById("wood").innerHTML = wood;
+		}
+ 	</script>
+
+	</body>
+
+</html>
