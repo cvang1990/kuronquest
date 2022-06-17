@@ -1,54 +1,52 @@
 <!DOCTYPE html>
 <html>
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	<!-- Compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+	<!-- Compiled and minified JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
     <!-- CSV to JSON -->
 	<script src="https://cdn.rawgit.com/Keyang/node-csvtojson/d41f44aa/browser/csvtojson.min.js"></script>
 
+	<style media="screen">
+		.text-hidden {
+			visibility: hidden;
+		}
+
+		img {
+			border-radius: 40px;
+			width: 80%;
+			padding: 15px;
+		}
+	</style>
+
 <body>
-	<!-- <div class="row">
-		<h2 style="text-align: center">Werekin</h2>
 
-		<div class="col s12">
-			<img src="https://drive.google.com/uc?export=view&id=1NnWcHmLSkIxPlbWnINAouNFPuFLJUkpc" alt="Werekin" style="width: 50%; border-radius: 15px; display: block; margin-left: auto; margin-right: auto">
+	<div class="row">
+		<div class="col s3"></div>
+		<div class="search-wrap col s6">
+			<label for="search">Search Card</label>
+			<input type="search" id="search" data-search>
 		</div>
+	</div>
 
-		<div class="col s12" style="text-align: center;">
-			<h4 style="color: red;">Gender</h4>
-			<br>
-			<h5 id="gender" class="">Genderless</h5>
-			<br>
-		</div>
-		<div class="col s7"></div>
-
-		<div class="col s12">
-			<div class="col s4" style="text-align: center;">
-				<button class="waves-effect waves-light btn blue" style=" width: 50%; text-align: center" onclick="gendermale(this)" type="button">Male</button>
+	<div class="row">
+			<div class="card-container col s12" data-cards-container>
 			</div>
-			<div class="col s4" style="text-align: center;">
-				<button class="waves-effect waves-light btn blue" style=" width: 50%; text-align: center" onclick="genderfemale(this)" type="button">Female</button>
-			</div>
-			<div class="col s4" style="text-align: center;">
-				<button class="waves-effect waves-light btn blue" style=" width: 50%; text-align: center" onclick="gendergenderless(this)" type="button">Genderless</button>
-			</div>
-		</div>
+			<template id="cards-temp" data-template>
+				<div class="col s4">
+					<div class="cards">
+						<div class="header text-hidden" data-header>1</div>
+						<div class="body text-hidden" data-body>2</div>
+						<div class="deck-type text-hidden" data-deck-type>3</div>
+						<div class="card-type text-hidden" data-card-type>4</div>
+						<div class="image cardsimage" data-image>5</div>
+					</div>
+				</div>
+			</template>
+	</div>
 
-	</div> -->
-
-    <div class="search-wrap">
-        <label for="search">Search Card</label>
-        <input type="search" id="search" data-search>
-    </div>
-    <div class="card-container" data-cards-container>
-
-    </div>
-    <template id="cards-temp" data-template>
-        <div class="cards">
-            <div class="header" data-header>1</div>
-            <div class="body" data-body>2</div>
-        </div>
-    </template>
 
     <script type="text/javascript">
         let abilities = [];
@@ -56,6 +54,7 @@
 
         // google sheets
 		let url_race_a_w = "https://docs.google.com/spreadsheets/d/1aTyNDibWsFQvNRUaCXVcXgTkYJrT_F7GALz9GSKEXGU/export?format=csv";
+		let url_all_cards = "https://docs.google.com/spreadsheets/d/1ixqqyXdeQCs4b4gEkqyYlvKl-e6ZdkWZkME3NIJg5nY/export?format=csv";
 
 
         const cardTemplate = document.querySelector("[data-template]");
@@ -73,25 +72,25 @@
         })
 
 		// Fetch Abilities and set into Array
-		fetch(url_race_a_w).then(result=>result.text()).then(function(csvtext) {
+		fetch(url_all_cards).then(result=>result.text()).then(function(csvtext) {
 			return csv().fromString(csvtext);
 		}).then(function(csv) {
 			cardlist = csv.map(function(row) {
-				// if ((row.weakness) != "x") {
-					// if (row.name != "Transform") {
-						// abilities.push(row);
-                        const card = cardTemplate.content.cloneNode(true).children[0];
-                        const header = card.querySelector("[data-header]");
-                        const body = card.querySelector("[data-body]");
-                        header.textContent = row.name;
-                        body.textContent = row.effect;
-                        cardContainer.append(card);
-                        return{name: row.name, effect: row.effect, element: card}
-                    // }
-				// }
+                const card = cardTemplate.content.cloneNode(true).children[0];
+                const header = card.querySelector("[data-header]");
+                const body = card.querySelector("[data-body]");
+				const deck_type = card.querySelector("[data-deck-type]");
+				const card_type = card.querySelector("[data-card-type]");
+				const image = card.querySelector("[data-image]");
+                header.textContent = row.name;
+                body.textContent = row.effect;
+				deck_type.textContent = row.deck_type;
+				card_type.textContent = row.card_type;
+				image.innerHTML = "<img src=\"https://drive.google.com/uc?export=view&id=" + row.url_id + "\" alt=\"" + row.name + "\">";
+                cardContainer.append(card);
+                return{name: row.name, effect: row.effect, deck_type: row.deck_type, card_type: row.card_type, url_id: "<img src=\"https://drive.google.com/uc?export=view&id=" + row.url_id + "\" alt=\"" + row.name + "\">", element: card}
 			})
 		});
-
 
     </script>
 </body>
