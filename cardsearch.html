@@ -1,75 +1,263 @@
 <!DOCTYPE html>
 <html>
-	<!-- Compiled and minified CSS -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<head>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
-	<!-- Compiled and minified JavaScript -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
+    <script type="text/javascript" src="js/materialize.min.js"></script>
 
     <!-- CSV to JSON -->
-	<script src="https://cdn.rawgit.com/Keyang/node-csvtojson/d41f44aa/browser/csvtojson.min.js"></script>
+    <script src="https://cdn.rawgit.com/Keyang/node-csvtojson/d41f44aa/browser/csvtojson.min.js"></script>
 
-	<style media="screen">
-		.text-hidden {
-			visibility: hidden;
-		}
+    <!--Let browser know website is optimized for mobile-->
+   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-		img {
-			border-radius: 40px;
-			width: 80%;
-			padding: 15px;
-		}
-	</style>
+    <style media="screen">
+        .text-hidden {
+            visibility: hidden;
+            display: none;
+        }
 
-<body>
+        img {
+            border-radius: 40px;
+            width: 80%;
+            padding: 15px;
+        }
 
+        .imageCardStyle:hover {
+            transform: scale(1.4);
+            transition: .5s;
+            cursor: pointer;
+        }
+
+        .cardImage {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cards {
+            display: block;
+            margin: auto;
+            text-align: center;
+        }
+
+        .titleText {
+            font-weight: bold;
+        }
+
+        @media only screen and (max-width: 600px) {
+
+        }
+    </style>
+
+</head>
+<body oncontextmenu="return false;">
 	<div class="row">
-		<div class="col s3"></div>
-		<div class="search-wrap col s6">
+		<div class="search-wrap col s10 push-s1 m6 push-m3">
 			<label for="search">Search Card</label>
 			<input type="search" id="search" data-search>
 		</div>
 	</div>
+    <div class="row">
+        <div class="col s10 push-s1 m3 push-m1">
+            <div class="input-field col s12 m12">
+                <select id="deck-type-option">
+                  <option value="All">All</option>
+                  <option value="Action">Action</option>
+                  <option value="Bonus">Bonus</option>
+                  <option value="Circle">Circle</option>
+                  <option value="Legendary Monsters">Legendary Monsters</option>
+                  <option value="Quest">Quest</option>
+                  <option value="Quest Item">Quest Item</option>
+                  <option value="Race">Race</option>
+                </select>
+                <label>Deck Type</label>
+            </div>
+        </div>
+        <div class="col s10 push-s1 m3 push-m1">
+            <div class="input-field col s12 m12">
+                <select id="expansion-type-option">
+                  <option value="All">All</option>
+                  <option value="Base">Base</option>
+                  <option value="Expanded World">Expanded World</option>
+                  <option value="Special Edition">Special Edition</option>
+                </select>
+                <label>Expansion</label>
+            </div>
+        </div>
+        <div class="col s12 m2 push-m2 buttonclass">
+            <button class="waves-effect waves-light btn" style="width: 100%; float: center; text-align: center" onclick="filterCardTypes(this)" type="button">Filter</button>
+        </div>
+        <div class="col s12 m2 push-m2 buttonclass">
+            <button class="waves-effect waves-light red btn" style="width: 100%; float: center; text-align: center" onclick="resetFilter(this)" type="button">Reset</button>
+        </div>
+
+    </div>
 
 	<div class="row">
-			<div class="card-container col s12" data-cards-container>
-			</div>
-			<template id="cards-temp" data-template>
-				<div class="col s4">
-					<div class="cards">
-						<div class="header text-hidden" data-header>1</div>
-						<div class="body text-hidden" data-body>2</div>
-						<div class="deck-type text-hidden" data-deck-type>3</div>
-						<div class="card-type text-hidden" data-card-type>4</div>
-						<div class="image cardsimage" data-image>5</div>
-					</div>
+		<div class="card-container col s12 m12" data-cards-container>
+		</div>
+    </div>
+    <div class="row">
+		<template id="cards-temp" data-template>
+			<div class="col s12 m4">
+				<div class="cards">
+					<div class="header text-hidden" data-header></div>
+					<div class="body text-hidden" data-body></div>
+                    <div class="image cardsimage" data-image></div>
+                    <div class="deck-type text-hidden" data-deck-type></div>
+                    <div class="card-type text-hidden" data-card-type></div>
+                    <div class="expansion-type text-hidden" data-expansion-type></div>
 				</div>
-			</template>
+			</div>
+		</template>
 	</div>
 
+    <!-- Card Details -->
+    <div class="row">
+        <div class="col s12 m6" id="cardImage">
+        </div>
+        <div class="col s12 m5">
+            <h4 id="cardName" class="titleText"></h4>
+            <h5 id="deckType"></h5>
+            <h5 id="cardType"></h5>
+            <h5 id="expansionType"></h5>
+            <p id="cardEffect"></p>
+        </div>
+
+    </div>
 
     <script type="text/javascript">
-        let abilities = [];
-        let cardlist = [];
-
-        // google sheets
-		let url_race_a_w = "https://docs.google.com/spreadsheets/d/1aTyNDibWsFQvNRUaCXVcXgTkYJrT_F7GALz9GSKEXGU/export?format=csv";
+        document.addEventListener('contextmenu', event => event.preventDefault());
 		let url_all_cards = "https://docs.google.com/spreadsheets/d/1ixqqyXdeQCs4b4gEkqyYlvKl-e6ZdkWZkME3NIJg5nY/export?format=csv";
-
 
         const cardTemplate = document.querySelector("[data-template]");
         const cardContainer = document.querySelector("[data-cards-container]");
         const searchInput = document.querySelector("[data-search]");
 
+        // CARD DISPLAY
+        const cardImageDisplay = document.querySelector("#cardImage");
+        const cardNameDisplay = document.querySelector("#cardName");
+        const deckTypeDisplay = document.querySelector("#deckType");
+        const cardTypeDisplay = document.querySelector("#cardType");
+        const expansionTypeDisplay = document.querySelector("#expansionType");
+        const cardEffectDisplay = document.querySelector("#cardEffect");
+
+        const resetCardDetailDisplay = () => {
+            cardImageDisplay.innerHTML = "";
+            cardNameDisplay.innerHTML = "";
+            deckTypeDisplay.innerHTML = "";
+            cardTypeDisplay.innerHTML = "";
+            expansionTypeDisplay.innerHTML = "";
+            cardEffectDisplay.innerHTML = "";
+        }
+
         searchInput.addEventListener("input", (e) => {
             const value = e.target.value.toLowerCase();
-            // console.log(cardlist);
+
+            // get deck type
+            const selectDeckType = document.getElementById("deck-type-option");
+            let deckType = selectDeckType.options[selectDeckType.selectedIndex].value;
+            let deckTypeSelect = deckType.toLowerCase();
+            // get expansion type
+            const selectExpansionType = document.getElementById("expansion-type-option");
+            let expansionType = selectExpansionType.options[selectExpansionType.selectedIndex].value;
+            let expansionTypeSelect = expansionType.toLowerCase();
+
+            resetCardDetailDisplay();
+
+            if (deckType == "All" && expansionType == "All") {
+                // Filter All Cards
+                cardlist.forEach(card => {
+                    const isVisible = card.name.toLowerCase().includes(value);
+                    card.element.classList.toggle("hide", !isVisible);
+                });
+                console.log(deckType);
+            } else if (deckType != "All" && expansionType == "All") {
+                // Filter based off DECK TYPE
+                cardlist.forEach(card => {
+                    const isVisible = card.name.toLowerCase().includes(value)
+                        && card.deck_type.toLowerCase().includes(deckTypeSelect);
+                    card.element.classList.toggle("hide", !isVisible);
+                });
+            } else if (deckType == "All" && expansionType != "All") {
+                // Filter based off EXPANSION TYPE
+                cardlist.forEach(card => {
+                    const isVisible = card.name.toLowerCase().includes(value)
+                        && card.expansion_type.toLowerCase().includes(expansionTypeSelect);
+                    card.element.classList.toggle("hide", !isVisible);
+                });
+            } else {
+                // Filter based off DECK TYPE and EXPANSION TYPE
+                cardlist.forEach(card => {
+                    const isVisible = card.name.toLowerCase().includes(value)
+                        && card.deck_type.toLowerCase().includes(deckTypeSelect)
+                        && card.expansion_type.toLowerCase().includes(expansionTypeSelect);
+                    card.element.classList.toggle("hide", !isVisible);
+                });
+            }
+        });
+
+        const resetFilter = control => {
             cardlist.forEach(card => {
-                const isVisible = card.name.toLowerCase().includes(value) ||
-                    card.effect.toLowerCase().includes(value);
+                const isVisible = card.deck_type;
                 card.element.classList.toggle("hide", !isVisible);
-            })
-        })
+            });
+
+            resetCardDetailDisplay();
+        }
+
+        const filterCardTypes = control => {
+            // get deck type
+            const selectDeckType = document.getElementById("deck-type-option");
+            let deckType = selectDeckType.options[selectDeckType.selectedIndex].value;
+
+            // get expansion type
+            const selectExpansionType = document.getElementById("expansion-type-option");
+            let expansionType = selectExpansionType.options[selectExpansionType.selectedIndex].value;
+
+            if (deckType != "All" && expansionType == "All"){
+                filterDeckAction(deckType);
+            } else if (deckType == "All" && expansionType != "All") {
+                filterExpansionAction(expansionType);
+            } else if (deckType != "All" && expansionType != "All") {
+                cardlist.forEach(card => {
+                    const isVisible = card.deck_type.toLowerCase().includes(deckType.toLowerCase())
+                        && card.expansion_type.toLowerCase().includes(expansionType.toLowerCase());
+                    card.element.classList.toggle("hide", !isVisible);
+                });
+            } else {
+                cardlist.forEach(card => {
+                    const isVisible = card.deck_type;
+                    card.element.classList.toggle("hide", !isVisible);
+                });
+            }
+
+            resetCardDetailDisplay();
+ 		}
+
+        // Filter deck function
+        const filterDeckAction = deckType => {
+            const deckTypeSelect = deckType.toLowerCase();
+            cardlist.forEach(card => {
+                const isVisible = card.deck_type.toLowerCase().includes(deckTypeSelect);
+                card.element.classList.toggle("hide", !isVisible);
+            });
+        }
+
+        // Filter expansion function
+        const filterExpansionAction = expansionType => {
+            const expansionTypeSelect = expansionType.toLowerCase();
+            cardlist.forEach(card => {
+                const isVisible = card.expansion_type.toLowerCase().includes(expansionTypeSelect);
+                console.log(isVisible);
+                card.element.classList.toggle("hide", !isVisible);
+            });
+        }
 
 		// Fetch Abilities and set into Array
 		fetch(url_all_cards).then(result=>result.text()).then(function(csvtext) {
@@ -81,17 +269,59 @@
                 const body = card.querySelector("[data-body]");
 				const deck_type = card.querySelector("[data-deck-type]");
 				const card_type = card.querySelector("[data-card-type]");
+                const expansion_type = card.querySelector("[data-expansion-type]");
 				const image = card.querySelector("[data-image]");
                 header.textContent = row.name;
                 body.textContent = row.effect;
 				deck_type.textContent = row.deck_type;
 				card_type.textContent = row.card_type;
-				image.innerHTML = "<img src=\"https://drive.google.com/uc?export=view&id=" + row.url_id + "\" alt=\"" + row.name + "\">";
+                expansion_type.textContent = row.expansion;
+                image.innerHTML = "<img src=\"https://drive.google.com/uc?export=view&id=" + row.url_id + "\" alt=\"" + row.name + "\" onclick=\"storeCard(this)\" id=\"" + row.url_id + "\" class=\"imageCardStyle\">";
+                // image.innerHTML = "<a href=\"" + "carddisplay.html" + "\"  id=\"" + row.url_id + "\"><img src=\"https://drive.google.com/uc?export=view&id=" + row.url_id + "\" alt=\"" + row.name + "\" onclick=\"storeCard(this)\" id=\"" + row.url_id + "\"></a>";
                 cardContainer.append(card);
-                return{name: row.name, effect: row.effect, deck_type: row.deck_type, card_type: row.card_type, url_id: "<img src=\"https://drive.google.com/uc?export=view&id=" + row.url_id + "\" alt=\"" + row.name + "\">", element: card}
+                return{
+                    name: row.name,
+                    effect: row.effect,
+                    deck_type: row.deck_type,
+                    card_type: row.card_type,
+                    expansion_type: row.expansion,
+                    url_id:"<img src=\"https://drive.google.com/uc?export=view&id=" + row.url_id + "\" alt=\"" + row.name + "\" onclick=\"storeCard(this)\" id=\"" + row.url_id + "\" class=\"imageCardStyle\">",
+                    // url_id: "<a href=\"" + "carddisplay.html" + "\"  id=\"" + row.url_id + "\"><img src=\"https://drive.google.com/uc?export=view&id=" + row.url_id + "\" alt=\"" + row.name + "\" onclick=\"storeCard(this)\" id=\"" + row.url_id + "\"></a>",
+                    element: card
+                }
 			})
 		});
 
+        const storeCard = id => {
+            let storedCardVal = (id.id);
+            // sessionStorage.setItem("storedCard", storedCardVal);
+            cardlist.forEach(card => {
+                const isVisible = card.url_id.includes("z0r0");
+                card.element.classList.toggle("hide", !isVisible);
+            });
+            fetch(url_all_cards).then(result=>result.text()).then(function(csvtext) {
+                // [4] return it as csv
+                return csv().fromString(csvtext);
+            }).then(function(csv) {
+                // [5] loop through each row in google sheets
+                csv.forEach(function(row) {
+                    if ((row.url_id) == storedCardVal) {
+                        cardImageDisplay.innerHTML = "<img class='cardImage' src=https://drive.google.com/uc?export=view&id=" + storedCardVal + ">"
+                        cardNameDisplay.innerHTML = row.name;
+                        deckTypeDisplay.innerHTML = "<span class='titleText'>Deck Type:</span> " + row.deck_type;
+                        cardTypeDisplay.innerHTML = "<span class='titleText'>Card Type:</span> " + row.card_type;
+                        expansionTypeDisplay.innerHTML = "<span class='titleText'>Expansion:</span> " + row.expansion;
+                        cardEffectDisplay.innerHTML = "<span class='titleText'>Card Text:</span> <br>" + row.effect;
+                    }
+                })
+            });
+
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('select');
+            var instances = M.FormSelect.init(elems);
+        });
     </script>
 </body>
 </html>
