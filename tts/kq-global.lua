@@ -9,7 +9,8 @@ QUEST_ZONE_TWO = Global.getVar('')
 QUEST_ZONE_THREE = Global.getVar('')
 
 function onLoad()
-
+    broadcastToAll('Let the adventure begin!')
+    broadcastToAll('Welcome to Kuron Quest.')
 end
 
 function
