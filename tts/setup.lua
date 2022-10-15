@@ -1,3 +1,6 @@
+[[-- This is code for the {{Setup Button}} ]]--
+
+[[-- Constants ]]--
 ACTION_DECK = Global.getVar('ACTION_DECK')
 BONUS_DECK = Global.getVar('BONUS_DECK')
 QUEST_DECK = Global.getVar('QUEST_DECK')
@@ -22,10 +25,18 @@ function setUpGame()
         quest_deck.questSetUp()
 
         GAME_STARTED = true
+
+        broadcastToAll("All players get 3 Action & 3 Bonus cards.")
+        broadcastToAll("3 Quest cards ready to be completed.")
+
+    else
+
+        broadcastToAll("The game has already started. You cannot setup again.")
+
     end
 end
 
-[[-- Specific Setup for Quests ]]--
+[[-- Specific Setup for Quests cards ]]--
 function questSetUp()
     local deck = getObjectFromGUID(QUEST_DECK)
 
