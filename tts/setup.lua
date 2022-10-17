@@ -1,33 +1,40 @@
-[[-- This is code for the {{Setup Button}} ]]--
+-- This is code for the {{Setup Button}} 
 
-[[-- Constants ]]--
+-- Constants
 ACTION_DECK = Global.getVar('ACTION_DECK')
 BONUS_DECK = Global.getVar('BONUS_DECK')
 QUEST_DECK = Global.getVar('QUEST_DECK')
 QUEST_ZONE_ONE = Global.getVar('QUEST_ZONE_ONE')
 QUEST_ZONE_TWO = Global.getVar('QUEST_ZONE_TWO')
 QUEST_ZONE_THREE = Global.getVar('QUEST_ZONE_THREE')
-GAME_STARTED = false
+FINISH_SETUP = Global.getVar('FINISH_SETUP')
 
-[[-- Setup Cards to Start Game ]]--
-function setUpGame()
+function onLoad()
+    print(FINISH_SETUP)
+end
+
+-- Setup Cards to Start Game
+function setupGame()
     local action_deck = getObjectFromGUID(ACTION_DECK)
     local bonus_deck = getObjectFromGUID(BONUS_DECK)
     local quest_deck = getObjectFromGUID(QUEST_DECK)
 
-    if GAME_STARTED == false then
+    if FINISH_SETUP == "false" then
         action_deck.randomize()
         bonus_deck.randomize()
         quest_deck.randomize()
 
         action_deck.deal(3)
-        action_deck.deal(3)
-        quest_deck.questSetUp()
+        bonus_deck.deal(3)
+        questCardsSetup()
 
-        GAME_STARTED = true
+        FINISH_SETUP = "true"
 
-        broadcastToAll("All players get 3 Action & 3 Bonus cards.")
-        broadcastToAll("3 Quest cards ready to be completed.")
+        broadcastToAll('Setup is complete. The game is ready to start!')
+        printToAll('All players get 3 Action cards, 3 Bonus cards, 3 Keru Coins, & 3 Settlement pieces.')
+        printToAll('All players start at level 1 with an Attack of 1 and Defense of 1.')
+        printToAll('All players start with 6 Life points, 0 Honor Points, & Level 1.')
+        printToAll('3 Quest cards are drawn and ready to be completed by anyone.')
 
     else
 
@@ -36,36 +43,19 @@ function setUpGame()
     end
 end
 
-[[-- Specific Setup for Quests cards ]]--
-function questSetUp()
-    local deck = getObjectFromGUID(QUEST_DECK)
-
-    -- Get scripting zone locations to place a single quest card.
-    local questZoneOne = ???.getPosition()
-    local questZoneTwo = ???.getPosition()
-    local questZoneThree = ???.getPosition()
-
-    for i = 1, 1 do
-        deck.takeObject({
-            flip = true,
-            position = {questZoneOne}
+-- Setup Quest cards in correct places
+function questCardsSetup()
+    local quest_deck = getObjectFromGUID(QUEST_DECK)
+    local quest_zone_one = getObjectFromGUID(QUEST_ZONE_ONE)
+    local quest_zone_two = getObjectFromGUID(QUEST_ZONE_TWO)
+    local quest_zone_three = getObjectFromGUID(QUEST_ZONE_THREE)
+    
+    for i=1, 1 do
+        quest_deck.takeObject({
+            flip=true,
+            position={quest_zone_one.getPosition()}
         })
     end
-    for i = 1, 1 do
-        deck.takeObject({
-            flip = true,
-            position = {questZoneTwo}
-        })
-    end
-    for i = 1, 1 do
-        deck.takeObject({
-            flip = true,
-            position = {questZoneThree}
-        })
-    end
-
-    ---
-        if
-
-    ---
+    
 end
+
