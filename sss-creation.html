@@ -1,1 +1,589 @@
+<!DOCTYPE html>
+<html>
+	<!-- Compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+	<!-- Compiled and minified JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<!-- CSV to JSON -->
+	<script src="https://cdn.rawgit.com/Keyang/node-csvtojson/d41f44aa/browser/csvtojson.min.js"></script>
+
+
+<body>
+	<!-- RACE NAME -->
+	<div class="row">
+		<h2 style="text-align: center">Modify Your Super</h2>
+
+		<!-- GENDER -->
+		<div class="col s12" style="text-align: center;">
+			<h4 style="color: red;">Alignment</h4>
+			<br>
+			<h5 id="alignment" class="">Hero</h5>
+			<br>
+		</div>
+		<div class="col s7"></div>
+		<!-- BUTTONS -->
+		<div class="col s12">
+			<div class="col s4" style="text-align: center;">
+				<button class="waves-effect waves-light btn blue" style=" width: 50%; text-align: center" onclick="alignmenthero(this)" type="button">Hero</button>
+			</div>
+			<div class="col s4" style="text-align: center;">
+				<button class="waves-effect waves-light btn blue" style=" width: 50%; text-align: center" onclick="alignmentvillain(this)" type="button">Villain</button>
+			</div>
+			<!-- <div class="col s4" style="text-align: center;">
+				<button class="waves-effect waves-light btn blue" style=" width: 50%; text-align: center" onclick="gendergenderless(this)" type="button">Genderless</button>
+			</div> -->
+		</div>
+
+	</div>
+
+	<hr>
+
+	<div class="row">
+		<!-- ABILITY TITLE -->
+		<div class="col s3">
+		</div>
+		<div class="col s6">
+			<h4 style="text-align: center; color: red">Ability</h4>
+		</div>
+	</div>
+
+	<!-- ABILITIES -->
+	<div class="row">
+		<!-- Ability 1 -->
+		<div class="col s12" style="padding: 20px;">
+			<h4 style="font-weight">Transform</h4>
+			<h5
+			style="text-align: left; vertical-align: middle; color: black; width: 100%;" id="abilityone">
+				At the beginning of your turn, you may change your second Ability to any ability and change your gender to any gender.
+			</h5>
+		</div>
+		<!-- Ability 2 -->
+		<div class="col s12" style="padding: 20px;">
+			<h4 style="font-weight" id="abilitytwoname">Refine Properties</h4>
+			<h5
+			style="text-align: left; vertical-align: middle; color: black; width: 100%;" id="abilitytwo">
+				At the beginning of your turn, you may change your Weakness to any weakness.
+			</h5>
+		</div>
+	</div>
+
+	<!-- BUTTONS -->
+	<div class="row">
+		<!-- <div class="col s6"></div> -->
+		<!-- PREVIOUS ABILITY -->
+		<div class="col s6" style="text-align: center;">
+			<button class="waves-effect waves-light btn" style="width: 50%; text-align: center" onclick="prevability(this)" type="button">Prev</button>
+		</div>
+		<!-- NEXT ABILITY -->
+		<div class="col s6" style="text-align: center;">
+			<button class="waves-effect waves-light btn" style="width: 50%; text-align: center" onclick="nextability(this)" type="button">Next</button>
+			<p id="i1" style="visibility: hidden">0</p>
+		</div>
+	</div>
+
+	<hr>
+
+	<div class="row">
+		<!-- WEAKNESS TITLE -->
+		<!-- <div class="col s3"></div> -->
+		<div class="col s12">
+			<h4 style="text-align: center; color: red">Weakness</h4>
+		</div>
+	</div>
+
+	<!-- WEAKNESS -->
+	<div class="row">
+		<!-- Ability 1 -->
+		<!-- <div class="col s3"></div> -->
+		<!-- Ability 2 -->
+		<div class="col s12" style="padding: 20px;">
+			<h4 style="font-weight" id="weakness">Blob</h4>
+			<h5
+			style="text-align: left; vertical-align: middle; color: black; width: 100%;" id="weaknesseffect">
+				Cannot equip any armor or equipment.
+			</h5>
+		</div>
+	</div>
+
+	<!-- BUTTONS -->
+	<div class="row">
+		<!-- <div class="col s3"></div> -->
+		<!-- PREVIOUS WEAKNESS -->
+		<div class="col s6" style="text-align: center;">
+			<button class="waves-effect waves-light btn" style="width: 50%;" onclick="prevweakness(this)" type="button">Prev</button>
+		</div>
+		<!-- NEXT WEAKNESS -->
+		<div class="col s6" style="text-align: center;">
+			<button class="waves-effect waves-light btn" style="width: 50%;" onclick="nextweakness(this)" type="button">Next</button>
+			<p id="i2" style="visibility: hidden">0</p>
+		</div>
+	</div>
+
+	<hr><hr>
+
+	<!-- TEXTS -->
+	<div class="row">
+		<h4 style="text-align: center">Player Tracker</h4>
+		<!-- ATTACK IMAGE & TEXT -->
+		<div class="col s6">
+			<h4 style="text-align: center; color: red">Attack</h4>
+			<img src="https://drive.google.com/uc?export=view&id=1I5LtJrJJeQ3OfzyPSxjnaNnxeT52djfW" alt="Attack" style="width: 25%; border-radius: 15px; display: block; margin-left: auto; margin-right: auto">
+		</div>
+		<!-- DEFENSE IMAGE & TEXT -->
+		<div class="col s6">
+			<h4 style="text-align: center; color: blue">Defense</h4>
+			<img src="https://drive.google.com/uc?export=view&id=1CAGJm7uHMXJ7xW6mLvjoZWGKHGhzIiQL" alt="Defense" style="width: 25%; border-radius: 15px; display: block; margin-left: auto; margin-right: auto">
+		</div>
+	</div>
+
+	<!-- ATTACK AND DEFENSE VIEWS -->
+	<div class="row">
+		<!-- ATTACK -->
+		<div class="col s6" style="border-radius: 20px; border-style: solid;">
+			<h1
+			style="text-align: center; vertical-align: middle; color: red; width: 100%;" id="attack">
+				1
+			</h1>
+		</div>
+		<!-- DEFENSE -->
+		<div class="col s6" style="border-radius: 20px; border-style: solid;">
+			<h1
+			style="text-align: center; vertical-align: middle; color: blue; width: 100%;" id="defense">
+				1
+			</h1>
+		</div>
+	</div>
+
+	<!-- BUTTONS -->
+	<div class="row">
+		<!-- MINUS ATTACK -->
+		<div class="col s3">
+			<button class="waves-effect waves-light btn" style="float: right; width: 50%; text-align: center" onclick="minusAttack(this)" type="button">-</button>
+		</div>
+		<!-- ADD ATTACK -->
+		<div class="col s3">
+			<button class="waves-effect waves-light btn" style="width: 50%; text-align: center" onclick="addAttack(this)" type="button">+</button>
+		</div>
+		<!-- MINUS DEFENSE -->
+		<div class="col s3">
+			<button class="waves-effect waves-light btn" style="float: right; width: 50%; text-align: center" onclick="minusDefense(this)" type="button">-</button>
+		</div>
+		<!-- ADD DEFENSE -->
+		<div class="col s3">
+			<button class="waves-effect waves-light btn" style="width: 50%; text-align: center" onclick="addDefense(this)" type="button">+</button>
+		</div>
+	</div>
+
+	<hr>
+
+	<div class="row">
+		<!-- LEVEL IMAGE & TEXT -->
+		<div class="col s3">
+			<h4 style="text-align: center">Level</h4>
+			<img src="https://drive.google.com/uc?export=view&id=148kXjQK8kJtrNUxrGwd2ZsjIXlaK65iI" alt="Level" style="width: 50%; border-radius: 15px; display: block; margin-left: auto; margin-right: auto">
+		</div>
+		<div class="col s2">
+
+		</div>
+		<!-- LEVEL VIEW -->
+		<div class="col s3" style="border-radius: 20px; border-style: solid;">
+			<h1
+			style="text-align: center; vertical-align: middle; width: 100%;" id="level">
+				1
+			</h1>
+		</div>
+		<!-- BUTTONS -->
+		<div class="col s4">
+			<!-- ADD LEVEL -->
+			<button class="waves-effect waves-light btn" style="width: 75%; text-align: center; float: right" onclick="addLevel(this)" type="button">+</button>
+			<br><br><br><br>
+			<!-- MINUS LEVEL -->
+			<button class="waves-effect waves-light btn" style="width: 75%; text-align: center; float: right" onclick="minusLevel(this)" type="button">-</button>
+		</div>
+	</div>
+
+	<hr>
+
+	<div class="row">
+		<!-- HONOR POINT IMAGE & TEXT -->
+		<div class="col s6">
+			<h4 style="text-align: center; color: green">Honor Points</h4>
+			<img src="https://drive.google.com/uc?export=view&id=1p8P_2HAaTPCVq8PnUDEmPZTq74QGvMdw" alt="Honor Points" style="width: 25%; border-radius: 15px; display: block; margin-left: auto; margin-right: auto">
+		</div>
+		<!-- LIFE POINT IMAGE & TEXT -->
+		<div class="col s6">
+			<h4 style="text-align: center; color: gray">Life</h4>
+			<img src="https://drive.google.com/uc?export=view&id=1vu_nH4L4P8QUwr8PmfWINIqop7oJcqK_" alt="Life Points" style="width: 25%; border-radius: 15px; display: block; margin-left: auto; margin-right: auto">
+		</div>
+	</div>
+
+	<!-- HP AND LIFE VIEWS -->
+	<div class="row">
+		<!-- HONOR POINTS -->
+		<div class="col s6" style="border-radius: 20px; border-style: solid;">
+			<h1
+			style="text-align: center; vertical-align: middle; color: green; width: 100%;" id="honorPoints">
+				0
+			</h1>
+		</div>
+		<!-- LIFE POINTS -->
+		<div class="col s6" style="border-radius: 20px; border-style: solid;">
+			<h1
+			style="text-align: center; vertical-align: middle; color: gray; width: 100%;" id="lifePoints">
+				6
+			</h1>
+		</div>
+	</div>
+
+	<!-- BUTTONS -->
+	<div class="row">
+		<!-- MINUS HONOR POINTS -->
+		<div class="col s3">
+			<button class="waves-effect waves-light btn" style="float: right; width: 50%; text-align: center" onclick="minusHonor(this)" type="button">-</button>
+		</div>
+		<!-- ADD HONOR POINTS -->
+		<div class="col s3">
+			<button class="waves-effect waves-light btn" style="width: 50%; text-align: center" onclick="addHonor(this)" type="button">+</button>
+		</div>
+		<!-- MINUS LIFE -->
+		<div class="col s3">
+			<button class="waves-effect waves-light btn" style="float: right; width: 50%; text-align: center" onclick="minusLife(this)" type="button">-</button>
+		</div>
+		<!-- ADD LIFE -->
+		<div class="col s3">
+			<button class="waves-effect waves-light btn" style="width: 50%; text-align: center" onclick="addLife(this)" type="button">+</button>
+		</div>
+	</div>
+
+	<hr>
+
+	<div class="row">
+		<!-- KERU COIN IMAGE & TEXT -->
+		<div class="col s3">
+			<h4 style="text-align: center">Keru Coins</h4>
+			<img src="https://drive.google.com/uc?export=view&id=1oWrr5OhitoSb1RZPeIRpdg26725opyJI" alt="Keru Coin" style="width: 50%; border-radius: 15px; display: block; margin-left: auto; margin-right: auto">
+		</div>
+		<div class="col s2">
+
+		</div>
+		<!-- KERU COIN VIEW -->
+		<div class="col s3" style="border-radius: 20px; border-style: solid;">
+			<h1
+			style="text-align: center; vertical-align: middle; width: 100%;" id="keru">
+				3
+			</h1>
+		</div>
+		<!-- BUTTONS -->
+		<div class="col s4">
+			<!-- ADD KERU COIN 5 -->
+			<!-- <button class="waves-effect waves-light btn" style="width: 75%; text-align: center; float: right" onclick="addKeru5(this)" type="button">+5</button> -->
+			<!-- ADD KERU COIN -->
+			<button class="waves-effect waves-light btn" style="width: 75%; text-align: center; float: right" onclick="addKeru(this)" type="button">+</button>
+			<br><br><br><br>
+			<!-- MINUS KERU COIN -->
+			<button class="waves-effect waves-light btn" style="width: 75%; text-align: center; float: right" onclick="minusKeru(this)" type="button">-</button>
+			<!-- MINUS KERU COIN 5 -->
+			<!-- <button class="waves-effect waves-light btn" style="width: 75%; text-align: center; float: right" onclick="minusKeru5(this)" type="button">-5</button> -->
+		</div>
+	</div>
+
+	<hr>
+
+	<!-- RESET BUTTON -->
+	<div class="row">
+		<div class="col s12" style="padding: 25px">
+			<button class="waves-effect waves-light btn red" style="width: 100%; text-align: center; margin: 15px" onclick="reset(this)" type="button">RESET STATS</button>
+		</div>
+	</div>
+
+	<br>
+
+	<script type="text/javascript">
+
+		const abilities = [];
+		const weaknesses = [];
+		const alignments = ["Hero", "Villain"];
+
+		// google sheets
+		let url_race_a_w = "https://docs.google.com/spreadsheets/d/1aTyNDibWsFQvNRUaCXVcXgTkYJrT_F7GALz9GSKEXGU/export?format=csv";
+
+		// Fetch Abilities and set into Array
+		fetch(url_race_a_w).then(result=>result.text()).then(function(csvtext) {
+			return csv().fromString(csvtext);
+		}).then(function(csv) {
+			csv.forEach(function(row) {
+				if ((row.weakness) != "x") {
+					if (row.name != "Transform") {
+						abilities.push(row);
+					}
+				}
+			})
+		});
+
+		// Fetch Weaknesses and set into Array
+		fetch(url_race_a_w).then(result=>result.text()).then(function(csvtext) {
+			return csv().fromString(csvtext);
+		}).then(function(csv) {
+			csv.forEach(function(row) {
+				if ((row.ability) != "x") {
+					weaknesses.push(row);
+				}
+			})
+		});
+		// WEREKIN RACE
+
+		// NEXT Ability
+		const nextability = control => {
+			let abilityname = document.getElementById("abilitytwoname").textContent;
+			let abilityeffect = document.getElementById("abilitytwo").textContent;
+			let i1 = document.getElementById("i1").textContent;
+			console.log("Next ability.");
+
+			if (i1 < abilities.length) {
+				console.log(i1);
+				console.log(abilities[i1].name);
+				i1++;
+				abilityname = abilities[i1].name;
+				abilityeffect = abilities[i1].effect;
+			}
+
+			document.getElementById("abilitytwoname").innerHTML = abilityname;
+			document.getElementById("abilitytwo").innerHTML = abilityeffect;
+			document.getElementById("i1").innerHTML = i1;
+		}
+
+		// PREV Ability
+		const prevability = control => {
+			let abilityname = document.getElementById("abilitytwoname").textContent;
+			let abilityeffect = document.getElementById("abilitytwo").textContent;
+			let i1 = document.getElementById("i1").textContent;
+			console.log("Prev ability.");
+
+			if (i1 < abilities.length) {
+				console.log(i1);
+				console.log(abilities[i1].name);
+				i1--;
+				abilityname = abilities[i1].name;
+				abilityeffect = abilities[i1].effect;
+			}
+
+			document.getElementById("abilitytwoname").innerHTML = abilityname;
+			document.getElementById("abilitytwo").innerHTML = abilityeffect;
+			document.getElementById("i1").innerHTML = i1;
+		}
+
+		// NEXT Weakness
+		const nextweakness = control => {
+			let weaknessname = document.getElementById("weakness").textContent;
+			let weaknesseffect = document.getElementById("weaknesseffect").textContent;
+			let i2 = document.getElementById("i2").textContent;
+			console.log("Next weakness.");
+
+			if (i2 < weaknesses.length) {
+				console.log(i2);
+				console.log(weaknesses[i2].name);
+				i2++;
+				weaknessname = weaknesses[i2].name;
+				weaknesseffect = weaknesses[i2].effect;
+			}
+
+			document.getElementById("weakness").innerHTML = weaknessname;
+			document.getElementById("weaknesseffect").innerHTML = weaknesseffect;
+			document.getElementById("i2").innerHTML = i2;
+		}
+
+		// PREV Weakness
+		const prevweakness = control => {
+			let weaknessname = document.getElementById("weakness").textContent;
+			let weaknesseffect = document.getElementById("weaknesseffect").textContent;
+			let i2 = document.getElementById("i2").textContent;
+			console.log("Next weakness.");
+
+			if (i2 < weaknesses.length) {
+				console.log(i2);
+				console.log(weaknesses[i2].name);
+				i2--;
+				weaknessname = weaknesses[i2].name;
+				weaknesseffect = weaknesses[i2].effect;
+			}
+
+			document.getElementById("weakness").innerHTML = weaknessname;
+			document.getElementById("weaknesseffect").innerHTML = weaknesseffect;
+			document.getElementById("i2").innerHTML = i2;
+		}
+
+		// affliations Male
+		const alignmenthero = control => {
+			let alignment = document.getElementById("alignment").textContent;
+			console.log("Change to hero alignment.");
+
+			alignment = alignments[0];
+
+			document.getElementById("alignment").innerHTML = alignment;
+		}
+
+		// affliations Female
+		const alignmentvillain = control => {
+			let alignment = document.getElementById("alignment").textContent;
+			console.log("Change to villain alignment.");
+
+			alignment = alignments[1];
+
+			document.getElementById("alignment").innerHTML = alignment;
+		}
+		// GENDER Genderless
+		// const gendergenderless = control => {
+		// 	let gender = document.getElementById("gender").textContent;
+		// 	console.log("Change to male gender.");
+		//
+		// 	gender = genders[2];
+		//
+		// 	document.getElementById("gender").innerHTML = gender;
+		// }
+
+		// PLAYER STAT TRACKER
+		// ATTACK
+		const addAttack = control => {
+			let attack = document.getElementById("attack").textContent;
+			if (attack < 99) {
+				console.log("Adding 1 to attack.");
+				attack ++;
+			}
+			document.getElementById("attack").innerHTML = attack;
+		}
+
+		const minusAttack = control => {
+			let attack = document.getElementById("attack").textContent;
+			let level = document.getElementById("level").textContent;
+			if (attack > 1) {
+				console.log("Subtracting 1 from attack.");
+				attack --;
+			}
+			document.getElementById("attack").innerHTML = attack;
+		}
+
+		// DEFENSE
+		const addDefense = control => {
+			let defense = document.getElementById("defense").textContent;
+			if (defense < 99) {
+				console.log("Adding 1 to defense.");
+				defense ++;
+			}
+			document.getElementById("defense").innerHTML = defense;
+		}
+
+		const minusDefense = control => {
+			let defense = document.getElementById("defense").textContent;
+			let level = document.getElementById("level").textContent;
+			if (defense > 1) {
+				console.log("Subtracting 1 from defense.");
+				defense --;
+			}
+			document.getElementById("defense").innerHTML = defense;
+		}
+
+		// LEVEL
+		const addLevel = control => {
+
+			let level = document.getElementById("level").textContent;
+			if(level < 6){
+				console.log("Adding 1 to level.");
+				level ++;
+				addAttack();
+				addDefense();
+			}
+			document.getElementById("level").innerHTML = level;
+		}
+
+		const minusLevel = control => {
+			let level = document.getElementById("level").textContent;
+			if (level > 1) {
+				console.log("Subtracting 1 from level.");
+				level --;
+				minusAttack();
+				minusDefense();
+			}
+			document.getElementById("level").innerHTML = level;
+		}
+
+		// HONOR POINTS
+		const addHonor = control => {
+			console.log("Adding 1 to honor points.");
+			let honor = document.getElementById("honorPoints").textContent;
+			if (honor < 20) {
+				honor ++;
+			}
+			document.getElementById("honorPoints").innerHTML = honor;
+		}
+
+		const minusHonor = control => {
+			let honor = document.getElementById("honorPoints").textContent;
+			if (honor > 0) {
+				console.log("Subtracting 1 from honor points.");
+				honor --;
+			}
+			document.getElementById("honorPoints").innerHTML = honor;
+		}
+
+		// LIFE POINTS
+		const addLife = control => {
+			let life = document.getElementById("lifePoints").textContent;
+			if (life < 6) {
+				console.log("Adding 1 to life points.");
+				life ++;
+			}
+			document.getElementById("lifePoints").innerHTML = life;
+		}
+
+		const minusLife = control => {
+			let life = document.getElementById("lifePoints").textContent;
+			if (life > 0) {
+				console.log("Subtracting 1 from life points.");
+				life --;
+			}
+			document.getElementById("lifePoints").innerHTML = life;
+		}
+
+		// KERU COINS
+		const addKeru = control => {
+			let keru = document.getElementById("keru").textContent;
+			if (keru < 99) {
+				console.log("Adding 1 to keru coins.");
+				keru ++;
+			}
+			document.getElementById("keru").innerHTML = keru;
+		}
+
+		const minusKeru = control => {
+			let keru = document.getElementById("keru").textContent;
+			if (keru > 0) {
+				console.log("Subtracting 1 from keru coins.");
+				keru --;
+			}
+			document.getElementById("keru").innerHTML = keru;
+		}
+
+		// RESET ALL
+		const reset = control => {
+			let attack = 1;
+			let defense = 1;
+			let level = 1;
+			let honor = 0;
+			let life = 6;
+			let keru = 3;
+
+			document.getElementById("attack").innerHTML = attack;
+			document.getElementById("defense").innerHTML = defense;
+			document.getElementById("level").innerHTML = level;
+			document.getElementById("honorPoints").innerHTML = honor;
+			document.getElementById("lifePoints").innerHTML = life;
+			document.getElementById("keru").innerHTML = keru;
+		}
+
+ 	</script>
+
+	</body>
+
+</html>
 
