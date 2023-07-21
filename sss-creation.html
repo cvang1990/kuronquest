@@ -3,7 +3,7 @@
 	<!-- Compiled and minified CSS -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
-	<!-- Compiled and minified JavaScript -->
+	<!-- Compiled and minified JavaScript for Materialize CSS -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 	<!-- CSV to JSON -->
 	<script src="https://cdn.rawgit.com/Keyang/node-csvtojson/d41f44aa/browser/csvtojson.min.js"></script>
@@ -75,6 +75,77 @@
 		</div>
 	</div>
 
+	<!-- =================================================================== -->
+
+	<hr>
+
+	<!-- <div class="input-field col s10">
+    	<select>
+	        <option value="" disabled selected>Choose your option</option>
+	        <option value="1">Option 1</option>
+	        <option value="2">Option 2</option>
+	        <option value="3">Option 3</option>
+	    </select>
+	    <label>Materialize Select</label>
+    </div> -->
+
+	<div>
+		<h4>Selected Ability</h4>
+		<h5 id="selected_ability_type">Type: None</h5>
+		<h6 id="selected_ability_effect">Effect: None</h6>
+	</div>
+
+	<!-- Modal Trigger -->
+	<a class="waves-effect waves-light btn modal-trigger" href="#modal-test" >Select Ability</a>
+
+	<!-- Modal Structure -->
+	<div id="modal-test" class="modal">
+	    <div class="modal-content">
+			<h4>Select Ability</h4>
+			<!-- <p>A bunch of text</p> -->
+			<div class="input-field col s6">
+				<select id="ability_type_selection">
+					<option value="All">All</option>
+					<option value="Delayed">Delayed</option>
+					<option value="Instant">Instant</option>
+					<option value="None">None</option>
+					<option value="Offensive">Offensive</option>
+					<option value="Trigger">Trigger</option>
+			    </select>
+				<label>Type</label>
+			</div>
+			<div class="input-field col s6">
+				<select id="ability_category_selection">
+					<option value="All">All</option>
+					<option value="Discard">Discard</option>
+					<option value="Draw">Draw</option>
+					<option value="Flip">Flip</option>
+					<option value="Increase Power">Increase Power</option>
+					<option value="Negate">Negate</option>
+					<option value="None">None</option>
+			    </select>
+				<label>Category</label>
+			</div>
+
+			<div class="col s12 m2 push-m2 buttonclass">
+	            <button class="waves-effect waves-light btn" style="width: 45%; float: center; text-align: center" onclick="abilityfilter(this)" type="button">Filter</button>
+	        <!-- </div>
+	        <div class="col s6 m2 push-m2 buttonclass"> -->
+	            <button class="waves-effect waves-light red btn" style="width: 45%; float: center; text-align: center" onclick="reset_filter(this)" type="button">Reset</button>
+	        </div>
+			<p id="all_abilities"></p>
+
+			<br><br><br><br>
+
+	    </div>
+	</div>
+	<p id="selected_filter_ability_skill_type" style="visibility: hidden">?</p>
+	<p id="selected_filter_ability_skill_category" style="visibility: hidden"></p>
+	<p id="selected_ability_skill_id" style="visibility: hidden"></p>
+	<p id="selected_ability_power_add" style="visibility: hidden"></p>
+
+	<!-- =================================================================== -->
+
 	<hr>
 
 	<div class="row">
@@ -113,28 +184,180 @@
 		</div>
 	</div>
 
+	<!-- Compiled and minified JavaScript for Materialize CSS -->
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"> -->
+	<!-- // document.addEventListener('DOMContentLoaded', function() {
+	//   var elems = document.querySelectorAll('.modal');
+	//   var instances = M.Modal.init(elems, options);
+	// }); -->
+	<!-- </script> -->
+
+
 	<!-- <hr><hr> -->
 
 	<script type="text/javascript">
 
 		const ability_skills = [];
+		const ability_skill_list = [];
+
 		const defense_skills = [];
 		const alignments = ["Hero", "Villain"];
+
+		let selected_ability_type;
+		let selected_ability_effect;
 
 		// google sheets
 		let url_race_a_w = "https://docs.google.com/spreadsheets/d/1aTyNDibWsFQvNRUaCXVcXgTkYJrT_F7GALz9GSKEXGU/export?format=csv";
 		let url_abilities_defenses = "https://docs.google.com/spreadsheets/d/17hmcKte-Bx573Ce4-0y6BC3BX6rF8Y2QiyDNNMmx_78/export?format=csv";
 
-		// Fetch Abilities and set into Array
-		fetch(url_abilities_defenses).then(result=>result.text()).then(function(csvtext) {
-			return csv().fromString(csvtext);
-		}).then(function(csv) {
-			csv.forEach(function(row) {
-				if ((row.skill_type) != "Defense") {
-						ability_skills.push(row);
-				}
-			})
-		});
+		// init: {
+		const abilityfilter = control => {
+			let set_ab_type_selected;
+			let set_ab_category_selected;
+			let ab_type_selected;
+			let ab_category_selected;
+
+			set_ab_type_selected = document.getElementById("ability_type_selection").options[ability_type_selection.selectedIndex].text;
+			set_ab_category_selected = document.getElementById("ability_category_selection").options[ability_type_selection.selectedIndex].text;
+
+			document.getElementById("selected_filter_ability_skill_type").innerHTML = set_ab_type_selected;
+			document.getElementById("selected_filter_ability_skill_category").innerHTML = set_ab_category_selected;
+
+			ab_type_selected = document.getElementById("selected_filter_ability_skill_type").textContent;
+			ab_category_selected = document.getElementById("selected_filter_ability_skill_category").textContent;
+
+
+			console.log(ab_type_selected);
+			console.log(ab_category_selected);
+
+			// Fetch Abilities and set into Array
+			fetch(url_abilities_defenses).then(result=>result.text()).then(function(csvtext) {
+				return csv().fromString(csvtext);
+			}).then(function(csv) {
+				csv.forEach(function(row) {
+					// if ((row.skill_type) != "Defense") {
+					// 	// ability_skills.push(row);
+					// }
+
+					// display based on selected type and category
+					if (row.skill_type != 'Defense') {
+						if (ab_type_selected == 'All' && ab_category_selected == 'All') {
+							// console.log(row);
+						} else if (ab_type_selected == row.type && ab_category_selected == row.category) {
+							// console.log(row);
+						}
+						// console.log(row);
+					}
+				});
+
+				// display based on selected type and category
+				// console.log(ability_skills);
+
+				// ability_skills.forEach(function(row){
+				// 	if ((row.type) == ab_type_selected && (row.category) == ab_category_selected) {
+				// 		// console.log(row);
+				// 	}
+				// 	// console.log(row);
+				// });
+			});
+		}
+
+
+
+
+
+		//======================================================================
+		// document.getElementById("ability_list_selection").innerHTML = "<select>";
+
+		// const abilityselection = control => {
+		// ability_skill_types.forEach(function(type) {
+		// 	let ability_type_option = type;
+		// 	// console.log(ability_type_option);
+		//
+		// 	document.getElementById("ability_list_selection").innerHTML +=
+		// 		"<option id=\""
+		// 		+ ability_type_option + "_ability"
+		// 		+ "\" value="
+		// 		+ ability_type_option
+		// 		+ " onclick:\"select_ability_type\">"
+		// 		+ ability_type_option
+		// 		+ "</option>";
+		// });
+		//
+		// const select_ability_type = control => {
+		// 	let abilitytype = document.getElementById("abilitytype").textContent;
+		// }
+		// console.log(selected_ability_type);
+
+
+		//======================================================================
+		iab = 0;
+		if (iab < ability_skills.length) {
+				console.log(iab);
+				console.log(ability_skills[iab].effects);
+				iab++;
+				ability_effects = abilities[iab].effects;
+				ability_power_add = abilities[iab].power_add;
+
+				document.getElementById("all_abilities").innerHTML +=
+					"<p>" + ability_effects + "</p><br>";
+		}
+
+		// console.log(ability_skills[1].effects);
+		// console.log(ability_skills);
+		// let i = 0;
+		// for (let i in ability_skills) {
+		// 	let ability_effect = ability_skills[i].effects;
+		// 	console.log(ability_skills[i]);
+		// 	console.log(ability_effect);
+		//
+		// 	document.getElementById("all_abilities").innerHTML +=
+		// 		"<p>" + ability_effect + "</p><br>";
+		// }
+		// ability_skills.forEach((effects) => {
+		// 	// let ability_effect = effect(effects);
+		// 	console.log()
+		//
+		// 	// document.getElementById("all_abilities").innerHTML +=
+		// 	// 	"<p>" + effects + "</p><br>";
+		// });
+		// console.log(ability_skills);
+
+		// const filter_ability = control => {
+        //     // get deck type
+        //     const selected_ab_type = document.getElementById("ability_type_selection");
+        //     let ability_type_selected = selected_ab_type.options[selected_ab_type.selectedIndex].value;
+		//
+        //     // get expansion type
+        //     const selected_ab_category = document.getElementById("ability_category_selection");
+        //     let ability_category_selected = selected_ab_category.options[selected_ab_category.selectedIndex].value;
+		//
+		//
+		//
+	    //         // if (selected_ab_type != "All" && selected_ab_category == "All"){
+		// 		//
+	    //         // } else if (selected_ab_type == "All" && selected_ab_category != "All") {
+		// 		//
+	    //         // } else if (selected_ab_type != "All" && selected_ab_category != "All") {
+		// 		//
+	    //         // } else {
+		// 		// 	document.getElementById("abilitytype").innerHTML = "Type: " + abilitytype;
+	    //         // }
+		//
+        //     // resetCardDetailDisplay();
+ 		// }
+
+        // Filter deck function
+        // const filterDeckAction = deckType => {
+        //     const deckTypeSelect = deckType.toLowerCase();
+        //     cardlist.forEach(card => {
+        //         const isVisible = card.deck_type.toLowerCase().includes(deckTypeSelect);
+        //         card.element.classList.toggle("hide", !isVisible);
+        //     });
+        // }
+
+		//======================================================================
+
 
 		// Fetch Defenses and set into Array
 		fetch(url_abilities_defenses).then(result=>result.text()).then(function(csvtext) {
@@ -215,6 +438,9 @@
 			document.getElementById("i1").innerHTML = i1;
 		}
 
+//==============================================================================
+
+//==============================================================================
 
 		// // NEXT Ability
 		// const nextability = control => {
@@ -327,142 +553,151 @@
 
 		// PLAYER STAT TRACKER
 		// ATTACK
-		const addAttack = control => {
-			let attack = document.getElementById("attack").textContent;
-			if (attack < 99) {
-				console.log("Adding 1 to attack.");
-				attack ++;
-			}
-			document.getElementById("attack").innerHTML = attack;
-		}
+		// const addAttack = control => {
+		// 	let attack = document.getElementById("attack").textContent;
+		// 	if (attack < 99) {
+		// 		console.log("Adding 1 to attack.");
+		// 		attack ++;
+		// 	}
+		// 	document.getElementById("attack").innerHTML = attack;
+		// }
+		//
+		// const minusAttack = control => {
+		// 	let attack = document.getElementById("attack").textContent;
+		// 	let level = document.getElementById("level").textContent;
+		// 	if (attack > 1) {
+		// 		console.log("Subtracting 1 from attack.");
+		// 		attack --;
+		// 	}
+		// 	document.getElementById("attack").innerHTML = attack;
+		// }
+		//
+		// // DEFENSE
+		// const addDefense = control => {
+		// 	let defense = document.getElementById("defense").textContent;
+		// 	if (defense < 99) {
+		// 		console.log("Adding 1 to defense.");
+		// 		defense ++;
+		// 	}
+		// 	document.getElementById("defense").innerHTML = defense;
+		// }
+		//
+		// const minusDefense = control => {
+		// 	let defense = document.getElementById("defense").textContent;
+		// 	let level = document.getElementById("level").textContent;
+		// 	if (defense > 1) {
+		// 		console.log("Subtracting 1 from defense.");
+		// 		defense --;
+		// 	}
+		// 	document.getElementById("defense").innerHTML = defense;
+		// }
+		//
+		// // LEVEL
+		// const addLevel = control => {
+		//
+		// 	let level = document.getElementById("level").textContent;
+		// 	if(level < 6){
+		// 		console.log("Adding 1 to level.");
+		// 		level ++;
+		// 		addAttack();
+		// 		addDefense();
+		// 	}
+		// 	document.getElementById("level").innerHTML = level;
+		// }
+		//
+		// const minusLevel = control => {
+		// 	let level = document.getElementById("level").textContent;
+		// 	if (level > 1) {
+		// 		console.log("Subtracting 1 from level.");
+		// 		level --;
+		// 		minusAttack();
+		// 		minusDefense();
+		// 	}
+		// 	document.getElementById("level").innerHTML = level;
+		// }
+		//
+		// // HONOR POINTS
+		// const addHonor = control => {
+		// 	console.log("Adding 1 to honor points.");
+		// 	let honor = document.getElementById("honorPoints").textContent;
+		// 	if (honor < 20) {
+		// 		honor ++;
+		// 	}
+		// 	document.getElementById("honorPoints").innerHTML = honor;
+		// }
+		//
+		// const minusHonor = control => {
+		// 	let honor = document.getElementById("honorPoints").textContent;
+		// 	if (honor > 0) {
+		// 		console.log("Subtracting 1 from honor points.");
+		// 		honor --;
+		// 	}
+		// 	document.getElementById("honorPoints").innerHTML = honor;
+		// }
+		//
+		// // LIFE POINTS
+		// const addLife = control => {
+		// 	let life = document.getElementById("lifePoints").textContent;
+		// 	if (life < 6) {
+		// 		console.log("Adding 1 to life points.");
+		// 		life ++;
+		// 	}
+		// 	document.getElementById("lifePoints").innerHTML = life;
+		// }
+		//
+		// const minusLife = control => {
+		// 	let life = document.getElementById("lifePoints").textContent;
+		// 	if (life > 0) {
+		// 		console.log("Subtracting 1 from life points.");
+		// 		life --;
+		// 	}
+		// 	document.getElementById("lifePoints").innerHTML = life;
+		// }
+		//
+		// // KERU COINS
+		// const addKeru = control => {
+		// 	let keru = document.getElementById("keru").textContent;
+		// 	if (keru < 99) {
+		// 		console.log("Adding 1 to keru coins.");
+		// 		keru ++;
+		// 	}
+		// 	document.getElementById("keru").innerHTML = keru;
+		// }
+		//
+		// const minusKeru = control => {
+		// 	let keru = document.getElementById("keru").textContent;
+		// 	if (keru > 0) {
+		// 		console.log("Subtracting 1 from keru coins.");
+		// 		keru --;
+		// 	}
+		// 	document.getElementById("keru").innerHTML = keru;
+		// }
+		//
+		// // RESET ALL
+		// const reset = control => {
+		// 	let attack = 1;
+		// 	let defense = 1;
+		// 	let level = 1;
+		// 	let honor = 0;
+		// 	let life = 6;
+		// 	let keru = 3;
+		//
+		// 	document.getElementById("attack").innerHTML = attack;
+		// 	document.getElementById("defense").innerHTML = defense;
+		// 	document.getElementById("level").innerHTML = level;
+		// 	document.getElementById("honorPoints").innerHTML = honor;
+		// 	document.getElementById("lifePoints").innerHTML = life;
+		// 	document.getElementById("keru").innerHTML = keru;
+		// }
 
-		const minusAttack = control => {
-			let attack = document.getElementById("attack").textContent;
-			let level = document.getElementById("level").textContent;
-			if (attack > 1) {
-				console.log("Subtracting 1 from attack.");
-				attack --;
-			}
-			document.getElementById("attack").innerHTML = attack;
-		}
-
-		// DEFENSE
-		const addDefense = control => {
-			let defense = document.getElementById("defense").textContent;
-			if (defense < 99) {
-				console.log("Adding 1 to defense.");
-				defense ++;
-			}
-			document.getElementById("defense").innerHTML = defense;
-		}
-
-		const minusDefense = control => {
-			let defense = document.getElementById("defense").textContent;
-			let level = document.getElementById("level").textContent;
-			if (defense > 1) {
-				console.log("Subtracting 1 from defense.");
-				defense --;
-			}
-			document.getElementById("defense").innerHTML = defense;
-		}
-
-		// LEVEL
-		const addLevel = control => {
-
-			let level = document.getElementById("level").textContent;
-			if(level < 6){
-				console.log("Adding 1 to level.");
-				level ++;
-				addAttack();
-				addDefense();
-			}
-			document.getElementById("level").innerHTML = level;
-		}
-
-		const minusLevel = control => {
-			let level = document.getElementById("level").textContent;
-			if (level > 1) {
-				console.log("Subtracting 1 from level.");
-				level --;
-				minusAttack();
-				minusDefense();
-			}
-			document.getElementById("level").innerHTML = level;
-		}
-
-		// HONOR POINTS
-		const addHonor = control => {
-			console.log("Adding 1 to honor points.");
-			let honor = document.getElementById("honorPoints").textContent;
-			if (honor < 20) {
-				honor ++;
-			}
-			document.getElementById("honorPoints").innerHTML = honor;
-		}
-
-		const minusHonor = control => {
-			let honor = document.getElementById("honorPoints").textContent;
-			if (honor > 0) {
-				console.log("Subtracting 1 from honor points.");
-				honor --;
-			}
-			document.getElementById("honorPoints").innerHTML = honor;
-		}
-
-		// LIFE POINTS
-		const addLife = control => {
-			let life = document.getElementById("lifePoints").textContent;
-			if (life < 6) {
-				console.log("Adding 1 to life points.");
-				life ++;
-			}
-			document.getElementById("lifePoints").innerHTML = life;
-		}
-
-		const minusLife = control => {
-			let life = document.getElementById("lifePoints").textContent;
-			if (life > 0) {
-				console.log("Subtracting 1 from life points.");
-				life --;
-			}
-			document.getElementById("lifePoints").innerHTML = life;
-		}
-
-		// KERU COINS
-		const addKeru = control => {
-			let keru = document.getElementById("keru").textContent;
-			if (keru < 99) {
-				console.log("Adding 1 to keru coins.");
-				keru ++;
-			}
-			document.getElementById("keru").innerHTML = keru;
-		}
-
-		const minusKeru = control => {
-			let keru = document.getElementById("keru").textContent;
-			if (keru > 0) {
-				console.log("Subtracting 1 from keru coins.");
-				keru --;
-			}
-			document.getElementById("keru").innerHTML = keru;
-		}
-
-		// RESET ALL
-		const reset = control => {
-			let attack = 1;
-			let defense = 1;
-			let level = 1;
-			let honor = 0;
-			let life = 6;
-			let keru = 3;
-
-			document.getElementById("attack").innerHTML = attack;
-			document.getElementById("defense").innerHTML = defense;
-			document.getElementById("level").innerHTML = level;
-			document.getElementById("honorPoints").innerHTML = honor;
-			document.getElementById("lifePoints").innerHTML = life;
-			document.getElementById("keru").innerHTML = keru;
-		}
+		document.addEventListener('DOMContentLoaded', function() {
+		    var elems = document.querySelectorAll('.modal');
+		    var instances = M.Modal.init(elems);
+		});
+		document.addEventListener('DOMContentLoaded', function() {
+		    var elems = document.querySelectorAll('select');
+		    var instances = M.FormSelect.init(elems);
+		});
 
  	</script>
 
