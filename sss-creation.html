@@ -47,9 +47,6 @@
 			<div class="col s6" style="text-align: center;">
 				<button class="waves-effect waves-light btn blue" style=" width: 50%; text-align: center" onclick="alignmentvillain(this)" type="button">Villain</button>
 			</div>
-			<!-- <div class="col s4" style="text-align: center;">
-				<button class="waves-effect waves-light btn blue" style=" width: 50%; text-align: center" onclick="gendergenderless(this)" type="button">Genderless</button>
-			</div> -->
 		</div>
 
 	</div>
@@ -145,7 +142,7 @@
 				<button class="waves-effect waves-light btn" style="width: 45%; float: center; text-align: center" onclick="ability_filter(this)" type="button">Filter</button>
 			<!-- </div>
 			<div class="col s6 m2 push-m2 buttonclass"> -->
-				<button class="waves-effect waves-light red btn" style="width: 45%; float: center; text-align: center" onclick="reset_filter(this)" type="button">Reset</button>
+				<button class="waves-effect waves-light red btn" style="width: 45%; float: center; text-align: center" onclick="reset_filter_ability(this)" type="button">Reset</button>
 			</div>
 			<p id="all_abilities"></p>
 
@@ -188,7 +185,7 @@
 				<button class="waves-effect waves-light btn" style="width: 45%; float: center; text-align: center" onclick="defense_filter(this)" type="button">Filter</button>
 			<!-- </div>
 			<div class="col s6 m2 push-m2 buttonclass"> -->
-				<button class="waves-effect waves-light red btn" style="width: 45%; float: center; text-align: center" onclick="reset_filter(this)" type="button">Reset</button>
+				<button class="waves-effect waves-light red btn" style="width: 45%; float: center; text-align: center" onclick="reset_filter_defense(this)" type="button">Reset</button>
 			</div>
 			<p id="all_defenses"></p>
 
@@ -218,6 +215,7 @@
 			<button class="waves-effect waves-light btn" style="width: 100%; float: center; text-align: center" onclick="display_super(this)" type="button">Display</button>
 		</div>
 		<div class="col s4"></div>
+		<!-- inputs for 1. main suit colors, 2. describe super powers, 3. gender, 4. describe physical features, 5. other additional information -->
 	</div>
 
 		</div>
@@ -227,8 +225,19 @@
 
 		const alignments = ["Hero", "Villain"];
 
-		// google sheets
+		// GOOGLE SHEETS URL
 		let url_abilities_defenses = "https://docs.google.com/spreadsheets/d/17hmcKte-Bx573Ce4-0y6BC3BX6rF8Y2QiyDNNMmx_78/export?format=csv";
+
+		// ALIGNMENT SELECTION
+		const alignmenthero = control => {
+			document.getElementById("alignment").innerHTML = alignments[0];
+			console.log("Set alignment to \"" + alignments[0] + "\".");
+		}
+
+		const alignmentvillain = control => {
+			document.getElementById("alignment").innerHTML = alignments[1];
+			console.log("Set alignment to \"" + alignments[1] + "\".");
+		}
 
 		// ABILITY FILTER BUTTON
 		const ability_filter = control => {
@@ -328,10 +337,12 @@
 				// console.log(super_power_val);
 				// console.log(ability_power);
 				// console.log(defense_power);
+
+				console.log("Set ability effect to \"" + selected_ability_effect + "\".");
 			});
 		}
-// ==============
 
+		// DEFENSE FILTER BUTTON
 		const defense_filter = control => {
 			let set_def_type_selected = ""; // Resets to blank before setting
 			let set_def_category_selected = ""; // Resets to blank before setting
@@ -386,6 +397,7 @@
 						+ defense_skills[i].id
 						+ ")\" type=\"button\">Select</button></div><hr>";
 				}
+
 			});
 		}
 
@@ -429,7 +441,17 @@
 				// console.log(super_power_val);
 				// console.log(ability_power);
 				// console.log(defense_power);
+
+				console.log("Set defense effect to \"" + selected_defense_effect + "\".");
 			});
+		}
+
+		const reset_filter_ability = control => {
+			document.getElementById("all_abilities").innerHTML = "";
+		}
+
+		const reset_filter_defense = control => {
+			document.getElementById("all_defenses").innerHTML = "";
 		}
 
 		// MATERIALIZE CSS
