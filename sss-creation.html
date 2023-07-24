@@ -10,11 +10,28 @@
 
 
 <body>
-	<!-- RACE NAME -->
+	<!-- CREATE SUPER -->
 	<div class="row">
-		<h2 style="text-align: center">Modify Your Super</h2>
+		<h2 style="text-align: center">Create Your Super</h2>
+		<br>
 
-		<!-- GENDER -->
+		<!-- SUPER NAME -->
+		<div class="col s12" style="text-align: center;">
+			<h4 style="color: red;">Super Name</h4>
+			<br>
+		</div>
+		<div class="col s3"></div>
+		<div class="col s6">
+			<input id="super_name" value="None"></input>
+		</div>
+		<div class="col s3"></div>
+		<br>
+		<div class="col s12">
+			<br><br>
+			<hr>
+		</div>
+
+		<!-- ALIGNMENT -->
 		<div class="col s12" style="text-align: center;">
 			<h4 style="color: red;">Alignment</h4>
 			<br>
@@ -24,10 +41,10 @@
 		<div class="col s7"></div>
 		<!-- BUTTONS -->
 		<div class="col s12">
-			<div class="col s4" style="text-align: center;">
+			<div class="col s6" style="text-align: center;">
 				<button class="waves-effect waves-light btn blue" style=" width: 50%; text-align: center" onclick="alignmenthero(this)" type="button">Hero</button>
 			</div>
-			<div class="col s4" style="text-align: center;">
+			<div class="col s6" style="text-align: center;">
 				<button class="waves-effect waves-light btn blue" style=" width: 50%; text-align: center" onclick="alignmentvillain(this)" type="button">Villain</button>
 			</div>
 			<!-- <div class="col s4" style="text-align: center;">
@@ -36,73 +53,70 @@
 		</div>
 
 	</div>
-
+	<br><br>
 	<hr>
 
 	<div class="row">
-		<!-- ABILITY TITLE -->
-		<div class="col s3">
+		<div class="col s12" style="text-align: center;">
+			<h4 style="color: red;">Ability & Defense</h4>
+			<br>
 		</div>
+		<div class="col s4"></div>
+		<div class="col s4">
+			<h3 id="super_power_value" style="text-align: center;">Power: 8</h3>
+		</div>
+		<div class="col s4"></div>
 		<div class="col s6">
-			<h4 style="text-align: center; color: red">Ability Skill</h4>
-		</div>
-	</div>
+			<div>
+				<h4>Name Your Ability</h4>
+				<input id="ability_name" value="None"></input>
+			</div>
+			<div>
+				<h4>Selected Ability</h4>
+				<h5 id="selected_ability_type">Type: None</h5>
+				<h5 id="selected_ability_category">Category: None</h5>
+				<h6 id="selected_ability_effect">Effect: None</h6>
+			</div>
 
-	<!-- ABILITIES -->
-	<div class="row">
-		<!-- Ability 2 -->
-		<div class="col s12" style="padding: 20px;">
-			<h4 style="font-weight" id="abilitytype">Type: Delayed</h4>
-			<h5
-			style="text-align: left; vertical-align: middle; color: black; width: 100%;" id="abilityeffect">
-				Roll a die: 1-3: Draw a card. 4-6: Draw 2 cards.
-			</h5>
-			<h5 style="visibility: hidden" id="abilitypoweradd">2.6</h5>
-		</div>
-	</div>
+			<!-- Modal Trigger -->
+			<a class="waves-effect waves-light btn modal-trigger" href="#modal-ability" >Select Ability</a>
 
-	<!-- BUTTONS -->
-	<div class="row">
-		<!-- <div class="col s6"></div> -->
-		<!-- PREVIOUS ABILITY -->
-		<div class="col s6" style="text-align: center;">
-			<button class="waves-effect waves-light btn" style="width: 50%; text-align: center" onclick="prevability(this)" type="button">Prev</button>
+			<p id="selected_filter_ability_skill_type" style="visibility: hidden"></p>
+			<p id="selected_filter_ability_skill_category" style="visibility: hidden"></p>
+			<p id="selected_ability_skill_id" style="visibility: hidden"></p>
+			<p id="selected_ability_power_add" style="visibility: hidden">4</p>
 		</div>
-		<!-- NEXT ABILITY -->
-		<div class="col s6" style="text-align: center;">
-			<button class="waves-effect waves-light btn" style="width: 50%; text-align: center" onclick="nextability(this)" type="button">Next</button>
-			<p id="i1" style="visibility: hidden">0</p>
-		</div>
-	</div>
+		<!-- <div class="col s6">
+			Defense
+		</div> -->
+		<div class="col s6">
+			<div>
+				<h4>Name Your Defense</h4>
+				<input id="defense_name" value="None"></input>
+			</div>
+			<div>
+				<h4>Selected Defense</h4>
+				<h5 id="selected_defense_type">Type: None</h5>
+				<h5 id="selected_defense_category">Category: None</h5>
+				<h6 id="selected_defense_effect">Effect: None</h6>
+			</div>
 
+			<!-- Modal Trigger -->
+			<a class="waves-effect waves-light btn modal-trigger" href="#modal-defense">Select Defense</a>
+
+			<p id="selected_filter_defense_skill_type" style="visibility: hidden"></p>
+			<p id="selected_filter_defense_skill_category" style="visibility: hidden"></p>
+			<p id="selected_defense_skill_id" style="visibility: hidden"></p>
+			<p id="selected_defense_power_add" style="visibility: hidden">4</p>
+		</div>
+
+	</div>
 	<!-- =================================================================== -->
 
-	<hr>
-
-	<!-- <div class="input-field col s10">
-    	<select>
-	        <option value="" disabled selected>Choose your option</option>
-	        <option value="1">Option 1</option>
-	        <option value="2">Option 2</option>
-	        <option value="3">Option 3</option>
-	    </select>
-	    <label>Materialize Select</label>
-    </div> -->
-
-	<div>
-		<h4>Selected Ability</h4>
-		<h5 id="selected_ability_type">Type: None</h5>
-		<h6 id="selected_ability_effect">Effect: None</h6>
-	</div>
-
-	<!-- Modal Trigger -->
-	<a class="waves-effect waves-light btn modal-trigger" href="#modal-test" >Select Ability</a>
-
-	<!-- Modal Structure -->
-	<div id="modal-test" class="modal">
-	    <div class="modal-content">
+	<!-- ABILITY MODAL -->
+	<div id="modal-ability" class="modal">
+		<div class="modal-content">
 			<h4>Select Ability</h4>
-			<!-- <p>A bunch of text</p> -->
 			<div class="input-field col s6">
 				<select id="ability_type_selection">
 					<option value="All">All</option>
@@ -111,7 +125,7 @@
 					<option value="None">None</option>
 					<option value="Offensive">Offensive</option>
 					<option value="Trigger">Trigger</option>
-			    </select>
+				</select>
 				<label>Type</label>
 			</div>
 			<div class="input-field col s6">
@@ -123,277 +137,309 @@
 					<option value="Increase Power">Increase Power</option>
 					<option value="Negate">Negate</option>
 					<option value="None">None</option>
-			    </select>
+				</select>
 				<label>Category</label>
 			</div>
 
 			<div class="col s12 m2 push-m2 buttonclass">
-	            <button class="waves-effect waves-light btn" style="width: 45%; float: center; text-align: center" onclick="abilityfilter(this)" type="button">Filter</button>
-	        <!-- </div>
-	        <div class="col s6 m2 push-m2 buttonclass"> -->
-	            <button class="waves-effect waves-light red btn" style="width: 45%; float: center; text-align: center" onclick="reset_filter(this)" type="button">Reset</button>
-	        </div>
+				<button class="waves-effect waves-light btn" style="width: 45%; float: center; text-align: center" onclick="ability_filter(this)" type="button">Filter</button>
+			<!-- </div>
+			<div class="col s6 m2 push-m2 buttonclass"> -->
+				<button class="waves-effect waves-light red btn" style="width: 45%; float: center; text-align: center" onclick="reset_filter(this)" type="button">Reset</button>
+			</div>
 			<p id="all_abilities"></p>
 
 			<br><br><br><br>
 
-	    </div>
+		</div>
 	</div>
-	<p id="selected_filter_ability_skill_type" style="visibility: hidden">?</p>
-	<p id="selected_filter_ability_skill_category" style="visibility: hidden"></p>
-	<p id="selected_ability_skill_id" style="visibility: hidden"></p>
-	<p id="selected_ability_power_add" style="visibility: hidden"></p>
 
-	<!-- =================================================================== -->
+	<!-- DEFENSE MODAL -->
+	<div id="modal-defense" class="modal">
+		<div class="modal-content">
+			<h4>Select Defense</h4>
+			<div class="input-field col s6">
+				<select id="defense_type_selection">
+					<option value="All">All</option>
+					<option value="Delayed">Delayed</option>
+					<option value="None">None</option>
+					<option value="Passive">Passive</option>
+					<option value="Trigger">Trigger</option>
+				</select>
+				<label>Type</label>
+			</div>
+			<div class="input-field col s6">
+				<select id="defense_category_selection">
+					<option value="All">All</option>
+					<option value="Decrease Power">Decrease Power</option>
+					<option value="Discard">Discard</option>
+					<option value="Draw">Draw</option>
+					<option value="Flip">Flip</option>
+					<option value="Increase Power">Increase Power</option>
+					<option value="Negate">Negate</option>
+					<option value="None">None</option>
+					<option value="Return">Return</option>
+					<option value="Swap">Swap</option>
+				</select>
+				<label>Category</label>
+			</div>
 
+			<div class="col s12 m2 push-m2 buttonclass">
+				<button class="waves-effect waves-light btn" style="width: 45%; float: center; text-align: center" onclick="defense_filter(this)" type="button">Filter</button>
+			<!-- </div>
+			<div class="col s6 m2 push-m2 buttonclass"> -->
+				<button class="waves-effect waves-light red btn" style="width: 45%; float: center; text-align: center" onclick="reset_filter(this)" type="button">Reset</button>
+			</div>
+			<p id="all_defenses"></p>
+
+			<br><br><br><br>
+
+		</div>
+	</div>
+	<br><br>
 	<hr>
 
 	<div class="row">
-		<!-- WEAKNESS TITLE -->
-		<!-- <div class="col s3"></div> -->
-		<div class="col s12">
-			<h4 style="text-align: center; color: red">Defense Skill</h4>
+		<div class="col s12" style="text-align: center;">
+			<h4 style="color: red;">Description Of Your Super</h4>
+			<br>
+			<div class="col s1"></div>
+			<div class="input-field col s9">
+		        <textarea id="textarea1" class="materialize-textarea" id="super_description"></textarea>
+	        </div>
+			<div class="col s1"></div>
 		</div>
 	</div>
-
-	<!-- WEAKNESS -->
+	<br><br>
+	<hr>
 	<div class="row">
-		<!-- Ability 1 -->
-		<!-- <div class="col s3"></div> -->
-		<!-- Ability 2 -->
-		<div class="col s12" style="padding: 20px;">
-			<h4 style="font-weight" id="defensetype">Type:</h4>
-			<h5
-			style="text-align: left; vertical-align: middle; color: black; width: 100%;" id="defenseeffect">
-				Effect.
-			</h5>
+		<div class="col s4"></div>
+		<div class="col s4">
+			<button class="waves-effect waves-light btn" style="width: 100%; float: center; text-align: center" onclick="display_super(this)" type="button">Display</button>
 		</div>
+		<div class="col s4"></div>
 	</div>
 
-	<!-- BUTTONS -->
-	<div class="row">
-		<!-- <div class="col s3"></div> -->
-		<!-- PREVIOUS WEAKNESS -->
-		<div class="col s6" style="text-align: center;">
-			<button class="waves-effect waves-light btn" style="width: 50%;" onclick="prevweakness(this)" type="button">Prev</button>
 		</div>
-		<!-- NEXT WEAKNESS -->
-		<div class="col s6" style="text-align: center;">
-			<button class="waves-effect waves-light btn" style="width: 50%;" onclick="nextweakness(this)" type="button">Next</button>
-			<p id="i2" style="visibility: hidden">0</p>
-		</div>
-	</div>
-
-	<!-- Compiled and minified JavaScript for Materialize CSS -->
-	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"> -->
-	<!-- // document.addEventListener('DOMContentLoaded', function() {
-	//   var elems = document.querySelectorAll('.modal');
-	//   var instances = M.Modal.init(elems, options);
-	// }); -->
-	<!-- </script> -->
-
-
-	<!-- <hr><hr> -->
+	<br><br><br><br>
 
 	<script type="text/javascript">
 
-		const ability_skills = [];
-		const ability_skill_list = [];
-
-		const defense_skills = [];
+		// const defense_skills = [];
 		const alignments = ["Hero", "Villain"];
 
-		let selected_ability_type;
-		let selected_ability_effect;
+		// let selected_ability_type;
+		// let selected_ability_effect;
 
 		// google sheets
-		let url_race_a_w = "https://docs.google.com/spreadsheets/d/1aTyNDibWsFQvNRUaCXVcXgTkYJrT_F7GALz9GSKEXGU/export?format=csv";
+		// let url_race_a_w = "https://docs.google.com/spreadsheets/d/1aTyNDibWsFQvNRUaCXVcXgTkYJrT_F7GALz9GSKEXGU/export?format=csv";
 		let url_abilities_defenses = "https://docs.google.com/spreadsheets/d/17hmcKte-Bx573Ce4-0y6BC3BX6rF8Y2QiyDNNMmx_78/export?format=csv";
 
-		// init: {
-		const abilityfilter = control => {
-			let set_ab_type_selected;
-			let set_ab_category_selected;
+		// ABILITY FILTER BUTTON
+		const ability_filter = control => {
+			let set_ab_type_selected = ""; // Resets to blank before setting
+			let set_ab_category_selected = ""; // Resets to blank before setting
 			let ab_type_selected;
 			let ab_category_selected;
+			let ability_skills = [];
+			let ability_skill_list = [];
 
 			set_ab_type_selected = document.getElementById("ability_type_selection").options[ability_type_selection.selectedIndex].text;
-			set_ab_category_selected = document.getElementById("ability_category_selection").options[ability_type_selection.selectedIndex].text;
+			set_ab_category_selected = document.getElementById("ability_category_selection").options[ability_category_selection.selectedIndex].text;
 
 			document.getElementById("selected_filter_ability_skill_type").innerHTML = set_ab_type_selected;
 			document.getElementById("selected_filter_ability_skill_category").innerHTML = set_ab_category_selected;
 
 			ab_type_selected = document.getElementById("selected_filter_ability_skill_type").textContent;
 			ab_category_selected = document.getElementById("selected_filter_ability_skill_category").textContent;
-
-
-			console.log(ab_type_selected);
-			console.log(ab_category_selected);
+			// console.log(ab_type_selected);
+			// console.log(ab_category_selected);
 
 			// Fetch Abilities and set into Array
 			fetch(url_abilities_defenses).then(result=>result.text()).then(function(csvtext) {
 				return csv().fromString(csvtext);
 			}).then(function(csv) {
 				csv.forEach(function(row) {
-					// if ((row.skill_type) != "Defense") {
-					// 	// ability_skills.push(row);
-					// }
 
-					// display based on selected type and category
+					// set selected abilities based on filter
 					if (row.skill_type != 'Defense') {
 						if (ab_type_selected == 'All' && ab_category_selected == 'All') {
-							// console.log(row);
+							ability_skills.push(row);
 						} else if (ab_type_selected == row.type && ab_category_selected == row.category) {
-							// console.log(row);
+							ability_skills.push(row);
+						} else if (ab_type_selected == 'All' && ab_category_selected == row.category){
+							ability_skills.push(row);
+						} else if (ab_type_selected == row.type && ab_category_selected == 'All'){
+							ability_skills.push(row);
 						}
-						// console.log(row);
 					}
 				});
 
-				// display based on selected type and category
-				// console.log(ability_skills);
+				// reset display area
+				document.getElementById("all_abilities").innerHTML = ""
 
-				// ability_skills.forEach(function(row){
-				// 	if ((row.type) == ab_type_selected && (row.category) == ab_category_selected) {
-				// 		// console.log(row);
-				// 	}
-				// 	// console.log(row);
-				// });
+				// display based on selected type and category
+				for (i=0; i <= ability_skills.length; i++) {
+					document.getElementById("all_abilities").innerHTML += "<br><b>Type:</b> "
+						+ ability_skills[i].type
+						+ "<br><b>Category:</b> "
+						+ ability_skills[i].category
+						+ "<div><b>Effect:</b> "
+						+ ability_skills[i].effects
+						+ " <br><button class=\"waves-effect blue waves-light btn\" onclick=\"ability_selected("
+						+ ability_skills[i].id
+						+ ")\" type=\"button\">Select</button></div><hr>";
+				}
+			});
+		}
+
+		const ability_selected = ability_id => {
+			// console.log(ability_id);
+			let selected_ability_id = "";
+			let selected_ability_effect = "";
+			let selected_ability_type = "";
+			let selected_ability_category = "";
+			let selected_ability_power_add = "";
+			let ability_power = "";
+			let defense_power = document.getElementById("selected_defense_power_add").textContent;
+			let super_power_val = 0;
+
+			fetch(url_abilities_defenses).then(result=>result.text()).then(function(csvtext) {
+				return csv().fromString(csvtext);
+			}).then(function(csv) {
+				csv.forEach(function(row) {
+
+					// set selected abilities based on filter
+					if (row.id == ability_id && row.skill_type != "Defense") {
+						selected_ability_id = row.id;
+						selected_ability_effect = row.effects;
+						selected_ability_type = row.type;
+						selected_ability_category = row.category;
+						selected_ability_power_add = row.power_add;
+					}
+				});
+
+				// display selected on non-modal
+				document.getElementById("selected_ability_type").innerHTML = "Type: " + selected_ability_type;
+				document.getElementById("selected_ability_category").innerHTML = "Category: " + selected_ability_category;
+				document.getElementById("selected_ability_effect").innerHTML = "Effect: " + selected_ability_effect;
+				// hidden values
+				document.getElementById("selected_ability_skill_id").innerHTML = selected_ability_id;
+				document.getElementById("selected_ability_power_add").innerHTML = selected_ability_power_add;
+				// update power
+				ability_power = selected_ability_power_add;
+				super_power_val = parseFloat(ability_power) + parseFloat(defense_power);
+				document.getElementById("super_power_value").innerHTML = "Power: " + Math.round(super_power_val);
+				// console.log(super_power_val);
+				// console.log(ability_power);
+				// console.log(defense_power);
+			});
+		}
+// ==============
+
+		const defense_filter = control => {
+			let set_def_type_selected = ""; // Resets to blank before setting
+			let set_def_category_selected = ""; // Resets to blank before setting
+			let def_type_selected;
+			let def_category_selected;
+			let defense_skills = [];
+			let defense_skill_list = [];
+
+			set_def_type_selected = document.getElementById("defense_type_selection").options[defense_type_selection.selectedIndex].text;
+			set_def_category_selected = document.getElementById("defense_category_selection").options[defense_category_selection.selectedIndex].text;
+
+			document.getElementById("selected_filter_defense_skill_type").innerHTML = set_def_type_selected;
+			document.getElementById("selected_filter_defense_skill_category").innerHTML = set_def_category_selected;
+
+			def_type_selected = document.getElementById("selected_filter_defense_skill_type").textContent;
+			def_category_selected = document.getElementById("selected_filter_defense_skill_category").textContent;
+			// console.log(ab_type_selected);
+			// console.log(ab_category_selected);
+
+			// Fetch Abilities and set into Array
+			fetch(url_abilities_defenses).then(result=>result.text()).then(function(csvtext) {
+				return csv().fromString(csvtext);
+			}).then(function(csv) {
+				csv.forEach(function(row) {
+
+					// set selected abilities based on filter
+					if (row.skill_type != 'Ability') {
+						if (def_type_selected == 'All' && def_category_selected == 'All') {
+							defense_skills.push(row);
+						} else if (def_type_selected == row.type && def_category_selected == row.category) {
+							defense_skills.push(row);
+						} else if (def_type_selected == 'All' && def_category_selected == row.category){
+							defense_skills.push(row);
+						} else if (def_type_selected == row.type && def_category_selected == 'All'){
+							defense_skills.push(row);
+						}
+					}
+				});
+
+				// reset display area
+				document.getElementById("all_defenses").innerHTML = "";
+
+				// display based on selected type and category
+				for (i=0; i <= defense_skills.length; i++) {
+					document.getElementById("all_defenses").innerHTML += "<br><b>Type:</b> "
+						+ defense_skills[i].type
+						+ "<br><b>Category:</b> "
+						+ defense_skills[i].category
+						+ "<div><b>Effect:</b> "
+						+ defense_skills[i].effects
+						+ " <br><button class=\"waves-effect blue waves-light btn\" onclick=\"defense_selected("
+						+ defense_skills[i].id
+						+ ")\" type=\"button\">Select</button></div><hr>";
+				}
+			});
+		}
+
+		const defense_selected = defense_id => {
+			// console.log(ability_id);
+			let selected_defense_id = "";
+			let selected_defense_effect = "";
+			let selected_defense_type = "";
+			let selected_defense_category = "";
+			let selected_defense_power_add = "";
+			let ability_power = document.getElementById("selected_ability_power_add").textContent;
+			let defense_power = "";
+			let super_power_val = 0;
+
+			fetch(url_abilities_defenses).then(result=>result.text()).then(function(csvtext) {
+				return csv().fromString(csvtext);
+			}).then(function(csv) {
+				csv.forEach(function(row) {
+
+					// set selected abilities based on filter
+					if (row.id == defense_id && row.skill_type != "Ability") {
+						selected_defense_id = row.id;
+						selected_defense_effect = row.effects;
+						selected_defense_type = row.type;
+						selected_defense_category = row.category;
+						selected_defense_power_add = row.power_add;
+					}
+				});
+
+				// display selected on non-modal
+				document.getElementById("selected_defense_type").innerHTML = "Type: " + selected_defense_type;
+				document.getElementById("selected_defense_category").innerHTML = "Category: " + selected_defense_category;
+				document.getElementById("selected_defense_effect").innerHTML = "Effect: " + selected_defense_effect;
+				// hidden values
+				document.getElementById("selected_defense_skill_id").innerHTML = selected_defense_id;
+				document.getElementById("selected_defense_power_add").innerHTML = selected_defense_power_add;
+				// update power
+				defense_power = selected_defense_power_add;
+				super_power_val = parseFloat(ability_power) + parseFloat(defense_power);
+				document.getElementById("super_power_value").innerHTML = "Power: " + Math.round(super_power_val);
+				// console.log(super_power_val);
+				// console.log(ability_power);
+				// console.log(defense_power);
 			});
 		}
 
 
+		// ===============================
 
-
-
-		//======================================================================
-		// document.getElementById("ability_list_selection").innerHTML = "<select>";
-
-		// const abilityselection = control => {
-		// ability_skill_types.forEach(function(type) {
-		// 	let ability_type_option = type;
-		// 	// console.log(ability_type_option);
-		//
-		// 	document.getElementById("ability_list_selection").innerHTML +=
-		// 		"<option id=\""
-		// 		+ ability_type_option + "_ability"
-		// 		+ "\" value="
-		// 		+ ability_type_option
-		// 		+ " onclick:\"select_ability_type\">"
-		// 		+ ability_type_option
-		// 		+ "</option>";
-		// });
-		//
-		// const select_ability_type = control => {
-		// 	let abilitytype = document.getElementById("abilitytype").textContent;
-		// }
-		// console.log(selected_ability_type);
-
-
-		//======================================================================
-		iab = 0;
-		if (iab < ability_skills.length) {
-				console.log(iab);
-				console.log(ability_skills[iab].effects);
-				iab++;
-				ability_effects = abilities[iab].effects;
-				ability_power_add = abilities[iab].power_add;
-
-				document.getElementById("all_abilities").innerHTML +=
-					"<p>" + ability_effects + "</p><br>";
-		}
-
-		// console.log(ability_skills[1].effects);
-		// console.log(ability_skills);
-		// let i = 0;
-		// for (let i in ability_skills) {
-		// 	let ability_effect = ability_skills[i].effects;
-		// 	console.log(ability_skills[i]);
-		// 	console.log(ability_effect);
-		//
-		// 	document.getElementById("all_abilities").innerHTML +=
-		// 		"<p>" + ability_effect + "</p><br>";
-		// }
-		// ability_skills.forEach((effects) => {
-		// 	// let ability_effect = effect(effects);
-		// 	console.log()
-		//
-		// 	// document.getElementById("all_abilities").innerHTML +=
-		// 	// 	"<p>" + effects + "</p><br>";
-		// });
-		// console.log(ability_skills);
-
-		// const filter_ability = control => {
-        //     // get deck type
-        //     const selected_ab_type = document.getElementById("ability_type_selection");
-        //     let ability_type_selected = selected_ab_type.options[selected_ab_type.selectedIndex].value;
-		//
-        //     // get expansion type
-        //     const selected_ab_category = document.getElementById("ability_category_selection");
-        //     let ability_category_selected = selected_ab_category.options[selected_ab_category.selectedIndex].value;
-		//
-		//
-		//
-	    //         // if (selected_ab_type != "All" && selected_ab_category == "All"){
-		// 		//
-	    //         // } else if (selected_ab_type == "All" && selected_ab_category != "All") {
-		// 		//
-	    //         // } else if (selected_ab_type != "All" && selected_ab_category != "All") {
-		// 		//
-	    //         // } else {
-		// 		// 	document.getElementById("abilitytype").innerHTML = "Type: " + abilitytype;
-	    //         // }
-		//
-        //     // resetCardDetailDisplay();
- 		// }
-
-        // Filter deck function
-        // const filterDeckAction = deckType => {
-        //     const deckTypeSelect = deckType.toLowerCase();
-        //     cardlist.forEach(card => {
-        //         const isVisible = card.deck_type.toLowerCase().includes(deckTypeSelect);
-        //         card.element.classList.toggle("hide", !isVisible);
-        //     });
-        // }
-
-		//======================================================================
-
-
-		// Fetch Defenses and set into Array
-		fetch(url_abilities_defenses).then(result=>result.text()).then(function(csvtext) {
-			return csv().fromString(csvtext);
-		}).then(function(csv) {
-			csv.forEach(function(row) {
-				if ((row.skill_type) != "Ability") {
-						defense_skills.push(row);
-				}
-			})
-		});
-
-		// Fetch Abilities and set into Array
-		// fetch(url_race_a_w).then(result=>result.text()).then(function(csvtext) {
-		// 	return csv().fromString(csvtext);
-		// }).then(function(csv) {
-		// 	csv.forEach(function(row) {
-		// 		if ((row.weakness) != "x") {
-		// 			if (row.name != "Transform") {
-		// 				abilities.push(row);
-		// 			}
-		// 		}
-		// 	})
-		// });
-
-		// Fetch Weaknesses and set into Array
-		// fetch(url_race_a_w).then(result=>result.text()).then(function(csvtext) {
-		// 	return csv().fromString(csvtext);
-		// }).then(function(csv) {
-		// 	csv.forEach(function(row) {
-		// 		if ((row.ability) != "x") {
-		// 			weaknesses.push(row);
-		// 		}
-		// 	})
-		// });
-		// WEREKIN RACE
 
 		// NEXT Ability
 		const nextability = control => {
