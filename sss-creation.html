@@ -8,11 +8,93 @@
 	<!-- CSV to JSON -->
 	<script src="https://cdn.rawgit.com/Keyang/node-csvtojson/d41f44aa/browser/csvtojson.min.js"></script>
 
+	<style media="screen">
+		.container {
+			position: relative;
+			text-align: center;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			color: white;
+		}
+
+		.container-card-display {
+			postion: relative;
+			text-align: center;
+			display: flex;
+		    justify-content: center;
+		    align-items: center;
+			width: 100%;
+		}
+
+		.image-assets {
+			position: absolute;
+			top: 2000px;
+			/* top: 268%; */
+			bottom 50%;
+			/* width: 810px; */
+			width: 75%;
+		}
+
+		.base-card-text {
+			position: absolute;
+			bottom 50%;
+			width:50%;
+			/* width: 100px; */
+			text-transform: uppercase;
+			font-weight: bold;
+			color: white;
+		}
+
+		.skill-card-text {
+			/* font-size: 25px; */
+			/* font-size: 100%; */
+			-webkit-text-stroke: 1px black;
+		}
+
+		.text-super-name {
+			top: 2500px;
+			font-size: 50px;
+			/* font-size: 500%; */
+			-webkit-text-stroke: 5px black;
+		}
+
+		.text-ability-name {
+			top: 2625px;
+			/* top: 348%; */
+			font-size: 40px;
+			transform: translate(-10%, 0%);
+			text-align: left;
+		}
+
+		.text-ability-effect {
+			top: 2680px;
+			font-size: 30px;
+			transform: translate(-15%, 0%);
+			text-align: left;
+		}
+
+		.text-defense-name {
+			top: 2825px;
+			font-size: 40px;
+			transform: translate(10%, 0%);
+			text-align: right;
+		}
+
+		.text-defense-effect {
+			top: 2880px;
+			font-size: 30px;
+			transform: translate(15%, 0%);
+			text-align: right;
+		}
+	</style>
+
 
 <body>
 	<!-- CREATE SUPER -->
 	<div class="row">
-		<h2 style="text-align: center">Create Your Super</h2>
+		<!-- <h2 style="text-align: center">Create Your Super</h2> -->
 		<br>
 
 		<!-- SUPER NAME -->
@@ -60,7 +142,7 @@
 		</div>
 		<div class="col s4"></div>
 		<div class="col s4">
-			<h3 id="super_power_value" style="text-align: center;">Power: 8</h3>
+			<h3 style="text-align: center;">Power: <span id="super_power_value">8</span></h3>
 		</div>
 		<div class="col s4"></div>
 		<div class="col s6">
@@ -70,9 +152,9 @@
 			</div>
 			<div>
 				<h4>Selected Ability</h4>
-				<h5 id="selected_ability_type">Type: None</h5>
-				<h5 id="selected_ability_category">Category: None</h5>
-				<h6 id="selected_ability_effect">Effect: None</h6>
+				<h5>Type: <span id="selected_ability_type">None</span></h5>
+				<h5>Category: <span id="selected_ability_category">None</span></h5>
+				<h6>Effect: <span id="selected_ability_effect">None</span></h6>
 			</div>
 
 			<!-- Modal Trigger -->
@@ -83,9 +165,6 @@
 			<p id="selected_ability_skill_id" style="visibility: hidden"></p>
 			<p id="selected_ability_power_add" style="visibility: hidden">4</p>
 		</div>
-		<!-- <div class="col s6">
-			Defense
-		</div> -->
 		<div class="col s6">
 			<div>
 				<h4>Name Your Defense</h4>
@@ -93,9 +172,9 @@
 			</div>
 			<div>
 				<h4>Selected Defense</h4>
-				<h5 id="selected_defense_type">Type: None</h5>
-				<h5 id="selected_defense_category">Category: None</h5>
-				<h6 id="selected_defense_effect">Effect: None</h6>
+				<h5>Type: <span id="selected_defense_type">None</span></h5>
+				<h5>Category: <span id="selected_defense_category">None</span></h5>
+				<h6>Effect: <span id="selected_defense_effect">None</span></h6>
 			</div>
 
 			<!-- Modal Trigger -->
@@ -108,7 +187,6 @@
 		</div>
 
 	</div>
-	<!-- =================================================================== -->
 
 	<!-- ABILITY MODAL -->
 	<div id="modal-ability" class="modal">
@@ -196,15 +274,60 @@
 	<br><br>
 	<hr>
 
-	<div class="row">
-		<div class="col s12" style="text-align: center;">
+	<div class="row" style="text-align: center;">
+		<div class="col s12">
 			<h4 style="color: red;">Description Of Your Super</h4>
 			<br>
-			<div class="col s1"></div>
-			<div class="input-field col s9">
-		        <textarea id="textarea1" class="materialize-textarea" id="super_description"></textarea>
-	        </div>
-			<div class="col s1"></div>
+			<!-- SUPER POWERS -->
+			<div class="row">
+				<div class="col s2"></div>
+				<div class="input-field col s8">
+					<textarea class="materialize-textarea" id="super_powers_description"></textarea>
+					<label for="">Super Powers</label>
+				</div>
+				<div class="col s2"> </div>
+			</div>
+
+			<!-- SUIT COLORS -->
+			<div class="row">
+				<div class="col s2"></div>
+				<div class="input-field col s8">
+					<textarea class="materialize-textarea" id="suit_colors_description"></textarea>
+					<label for="">Suit Colors</label>
+				</div>
+				<div class="col s2"></div>
+			</div>
+
+			<!-- PHYSICAL FEATURES -->
+			<div class="row">
+				<div class="col s2"></div>
+				<div class="input-field col s8">
+					<textarea class="materialize-textarea" id="physical_features_description"></textarea>
+					<label for="">Physical Features</label>
+				</div>
+				<div class="col s2"></div>
+			</div>
+
+			<!-- RACE -->
+			<div class="row">
+				<div class="col s2"></div>
+				<div class="input-field col s8">
+					<textarea class="materialize-textarea" id="race_description"></textarea>
+					<label for="">Race</label>
+				</div>
+				<div class="col s2"></div>
+			</div>
+
+			<!-- GENDER -->
+			<div class="row">
+				<div class="col s2"></div>
+				<div class="input-field col s8">
+					<textarea class="materialize-textarea" id="gender_description"></textarea>
+					<label for="">Gender</label>
+				</div>
+				<div class="col s2"></div>
+			</div>
+
 		</div>
 	</div>
 	<br><br>
@@ -219,14 +342,23 @@
 	</div>
 
 		</div>
+
+	<br>
+	<div class="container container-card-display" id="card_display_layout">
+
+	</div>
 	<br><br><br><br>
 
 	<script type="text/javascript">
 
 		const alignments = ["Hero", "Villain"];
 
+		// CREATE CARD ASSETS
+		const base_card = "https://drive.google.com/uc?export=view&id=1pcvbGcktqmoXuMu547BtH8A_25gUPDOT";
+
 		// GOOGLE SHEETS URL
 		let url_abilities_defenses = "https://docs.google.com/spreadsheets/d/17hmcKte-Bx573Ce4-0y6BC3BX6rF8Y2QiyDNNMmx_78/export?format=csv";
+		let url_create_card_assets = "https://docs.google.com/spreadsheets/d/1EsQJtOvSWhus9-tmgvwqv2ndYt5LXsgqSgwo2IHxPGk/export?format=csv";
 
 		// ALIGNMENT SELECTION
 		const alignmenthero = control => {
@@ -324,16 +456,16 @@
 				});
 
 				// display selected on non-modal
-				document.getElementById("selected_ability_type").innerHTML = "Type: " + selected_ability_type;
-				document.getElementById("selected_ability_category").innerHTML = "Category: " + selected_ability_category;
-				document.getElementById("selected_ability_effect").innerHTML = "Effect: " + selected_ability_effect;
+				document.getElementById("selected_ability_type").innerHTML = selected_ability_type;
+				document.getElementById("selected_ability_category").innerHTML = selected_ability_category;
+				document.getElementById("selected_ability_effect").innerHTML = selected_ability_effect;
 				// hidden values
 				document.getElementById("selected_ability_skill_id").innerHTML = selected_ability_id;
 				document.getElementById("selected_ability_power_add").innerHTML = selected_ability_power_add;
 				// update power
 				ability_power = selected_ability_power_add;
 				super_power_val = parseFloat(ability_power) + parseFloat(defense_power);
-				document.getElementById("super_power_value").innerHTML = "Power: " + Math.round(super_power_val);
+				document.getElementById("super_power_value").innerHTML = Math.round(super_power_val);
 				// console.log(super_power_val);
 				// console.log(ability_power);
 				// console.log(defense_power);
@@ -428,16 +560,16 @@
 				});
 
 				// display selected on non-modal
-				document.getElementById("selected_defense_type").innerHTML = "Type: " + selected_defense_type;
-				document.getElementById("selected_defense_category").innerHTML = "Category: " + selected_defense_category;
-				document.getElementById("selected_defense_effect").innerHTML = "Effect: " + selected_defense_effect;
+				document.getElementById("selected_defense_type").innerHTML = selected_defense_type;
+				document.getElementById("selected_defense_category").innerHTML = selected_defense_category;
+				document.getElementById("selected_defense_effect").innerHTML = selected_defense_effect;
 				// hidden values
 				document.getElementById("selected_defense_skill_id").innerHTML = selected_defense_id;
 				document.getElementById("selected_defense_power_add").innerHTML = selected_defense_power_add;
 				// update power
 				defense_power = selected_defense_power_add;
 				super_power_val = parseFloat(ability_power) + parseFloat(defense_power);
-				document.getElementById("super_power_value").innerHTML = "Power: " + Math.round(super_power_val);
+				document.getElementById("super_power_value").innerHTML = Math.round(super_power_val);
 				// console.log(super_power_val);
 				// console.log(ability_power);
 				// console.log(defense_power);
@@ -452,6 +584,113 @@
 
 		const reset_filter_defense = control => {
 			document.getElementById("all_defenses").innerHTML = "";
+		}
+
+		const display_super = control => {
+			let super_name = document.getElementById("super_name").value;
+			let alignment = document.getElementById("alignment").textContent;
+			let ability_name = document.getElementById("ability_name").value;
+			let ability_type = document.getElementById("selected_ability_type").textContent;
+			let ability_effect = document.getElementById("selected_ability_effect").textContent;
+			let defense_name = document.getElementById("defense_name").value;
+			let defense_type = document.getElementById("selected_defense_type").textContent;
+			let defense_effect = document.getElementById("selected_defense_effect").textContent;
+			let power = document.getElementById("super_power_value").textContent;
+			let ability_id = document.getElementById("selected_ability_skill_id").textContent;
+			let defense_id = document.getElementById("selected_defense_skill_id").textContent;
+
+			let card_asset_items = [];
+			let card_base_layout;
+			let set_card_asset_alignment;
+			let set_card_asset_power_value;
+			let set_card_asset_ability_type;
+			let set_card_asset_defense_type;
+			let set_super_name;
+			let set_ability_name;
+			let set_ability_effect;
+			let set_defense_name;
+			let set_defense_effect;
+
+			// reset card display
+			document.getElementById("card_display_layout").innerHTML = "";
+
+			// card_display_layout
+			fetch(url_create_card_assets).then(result=>result.text()).then(function(csvtext) {
+				return csv().fromString(csvtext);
+			}).then(function(csv) {
+				csv.forEach(function(row) {
+
+					card_asset_items.push(row);
+
+				});
+
+				// SET CARD ASSETS
+				// CARD TEMPLATE
+				card_base_layout = "<img src=\""
+					+ card_asset_items[0].asset_image
+					+ "\" alt=\"card template - create\" class=\"image-assets\">";
+
+				// ALIGNMENT
+				for (i=0; i < card_asset_items.length; i++) {
+					if (card_asset_items[i].card_asset == "Alignment" && card_asset_items[i].value == alignment) {
+						// console.log(card_asset_items[i].asset_image);
+						set_card_asset_alignment = "<img src=\""
+							+ card_asset_items[i].asset_image
+							+ "\" alt=\"card template - create\" class=\"image-assets\">";
+					}
+				};
+
+				// POWER VALUE
+				for (i=0; i < card_asset_items.length; i++) {
+					if (card_asset_items[i].card_asset == "Power Value" && card_asset_items[i].value == power) {
+						// console.log(card_asset_items[i].asset_image);
+						set_card_asset_power_value = "<img src=\""
+							+ card_asset_items[i].asset_image
+							+ "\" alt=\"card template - create\" class=\"image-assets\">";
+					}
+				};
+
+				// ABILITY TYPE
+				for (i=0; i < card_asset_items.length; i++) {
+					if (card_asset_items[i].card_asset == "Ability Type" && card_asset_items[i].value == ability_type) {
+						// console.log(card_asset_items[i].asset_image);
+						set_card_asset_ability_type = "<img src=\""
+							+ card_asset_items[i].asset_image
+							+ "\" alt=\"card template - create\" class=\"image-assets\">";
+					}
+				};
+
+				// DEFENSE TYPE
+				for (i=0; i < card_asset_items.length; i++) {
+					if (card_asset_items[i].card_asset == "Defense Type" && card_asset_items[i].value == defense_type) {
+						console.log(card_asset_items[i].asset_image);
+						set_card_asset_defense_type = "<img src=\""
+							+ card_asset_items[i].asset_image
+							+ "\" alt=\"card template - create\" class=\"image-assets\">";
+					}
+				};
+
+				set_super_name = "<div class=\"text-super-name base-card-text\">" + super_name + "</div>";
+				set_ability_name = "<div class=\"skill-card-text base-card-text text-ability-name\">" + ability_name + "</div>";
+				set_ability_effect = "<div class=\"skill-card-text base-card-text text-ability-effect\">" + ability_effect + "</div>";
+				set_defense_name = "<div class=\"skill-card-text base-card-text text-defense-name\">" + defense_name + "</div>";
+				set_defense_effect = "<div class=\"skill-card-text base-card-text text-defense-effect\">" + defense_effect + "</div>";
+
+				// SETUP CARD
+				document.getElementById("card_display_layout").innerHTML = card_base_layout;
+				document.getElementById("card_display_layout").innerHTML += set_card_asset_alignment;
+				document.getElementById("card_display_layout").innerHTML += set_card_asset_power_value;
+				document.getElementById("card_display_layout").innerHTML += set_card_asset_ability_type;
+				document.getElementById("card_display_layout").innerHTML += set_card_asset_defense_type;
+				document.getElementById("card_display_layout").innerHTML += set_super_name;
+				document.getElementById("card_display_layout").innerHTML += set_ability_name;
+				document.getElementById("card_display_layout").innerHTML += set_ability_effect;
+				document.getElementById("card_display_layout").innerHTML += set_defense_name;
+				document.getElementById("card_display_layout").innerHTML += set_defense_effect;
+
+				console.log("Display card generated.");
+			});
+
 		}
 
 		// MATERIALIZE CSS
