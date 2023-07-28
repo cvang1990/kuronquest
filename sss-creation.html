@@ -30,64 +30,31 @@
 
 		.image-assets {
 			position: absolute;
-			top: 2000px;
-			/* top: 268%; */
+			top: 2450px;
+			/* top: 282%; */
 			bottom 50%;
 			/* width: 810px; */
-			width: 75%;
+			width: 33%;
 		}
 
-		.base-card-text {
-			position: absolute;
-			bottom 50%;
-			width:50%;
-			/* width: 100px; */
-			text-transform: uppercase;
-			font-weight: bold;
-			color: white;
+		.card-super-image {
+			width: 100%;
 		}
 
-		.skill-card-text {
-			/* font-size: 25px; */
-			/* font-size: 100%; */
-			-webkit-text-stroke: 1px black;
+		@media only screen and (max-width: 1000px) and (min-width: 600px) {
+			.image-assets {
+				top: 2550px;
+				width: 50%;
+			}
 		}
 
-		.text-super-name {
-			top: 2500px;
-			font-size: 50px;
-			/* font-size: 500%; */
-			-webkit-text-stroke: 5px black;
+		@media only screen and (max-width: 600px) {
+			.image-assets {
+				top: 2650px;
+				width: 90%;
+			}
 		}
 
-		.text-ability-name {
-			top: 2625px;
-			/* top: 348%; */
-			font-size: 40px;
-			transform: translate(-10%, 0%);
-			text-align: left;
-		}
-
-		.text-ability-effect {
-			top: 2680px;
-			font-size: 30px;
-			transform: translate(-15%, 0%);
-			text-align: left;
-		}
-
-		.text-defense-name {
-			top: 2825px;
-			font-size: 40px;
-			transform: translate(10%, 0%);
-			text-align: right;
-		}
-
-		.text-defense-effect {
-			top: 2880px;
-			font-size: 30px;
-			transform: translate(15%, 0%);
-			text-align: right;
-		}
 	</style>
 
 
@@ -130,7 +97,6 @@
 				<button class="waves-effect waves-light btn blue" style=" width: 50%; text-align: center" onclick="alignmentvillain(this)" type="button">Villain</button>
 			</div>
 		</div>
-
 	</div>
 	<br><br>
 	<hr>
@@ -160,9 +126,9 @@
 			<!-- Modal Trigger -->
 			<a class="waves-effect waves-light btn modal-trigger" href="#modal-ability" >Select Ability</a>
 
-			<p id="selected_filter_ability_skill_type" style="visibility: hidden"></p>
-			<p id="selected_filter_ability_skill_category" style="visibility: hidden"></p>
-			<p id="selected_ability_skill_id" style="visibility: hidden"></p>
+			<p id="selected_filter_ability_skill_type" style="visibility: hidden">None</p>
+			<p id="selected_filter_ability_skill_category" style="visibility: hidden">None</p>
+			<p id="selected_ability_skill_id" style="visibility: hidden">18</p>
 			<p id="selected_ability_power_add" style="visibility: hidden">4</p>
 		</div>
 		<div class="col s6">
@@ -180,12 +146,21 @@
 			<!-- Modal Trigger -->
 			<a class="waves-effect waves-light btn modal-trigger" href="#modal-defense">Select Defense</a>
 
-			<p id="selected_filter_defense_skill_type" style="visibility: hidden"></p>
-			<p id="selected_filter_defense_skill_category" style="visibility: hidden"></p>
-			<p id="selected_defense_skill_id" style="visibility: hidden"></p>
+			<p id="selected_filter_defense_skill_type" style="visibility: hidden">None</p>
+			<p id="selected_filter_defense_skill_category" style="visibility: hidden">None</p>
+			<p id="selected_defense_skill_id" style="visibility: hidden">17</p>
 			<p id="selected_defense_power_add" style="visibility: hidden">4</p>
 		</div>
-
+		<div class="col s12" style="text-align: center;">
+			<div id="alignment_ability_tied" style="color: red;"></div>
+			<br>
+			<div id="alignment_defense_tied" style="color: red;"></div>
+			<br>
+			<div id="skill_buffs" style="color: green;"></div>
+			<br>
+			<div id="unique_combo" style="color: purple;"></div>
+			<br>
+		</div>
 	</div>
 
 	<!-- ABILITY MODAL -->
@@ -332,21 +307,105 @@
 	</div>
 	<br><br>
 	<hr>
+		<!-- </div> -->
+
+	<br>
+	<div class="row"  style="text-align: center">
+		<div class="col s12" style="text-align: center;">
+			<h4 style="color: red;">Select An Example Image For Display</h4>
+			<br>
+		</div>
+
+		<!-- Modal Trigger -->
+		<a class="waves-effect waves-light btn modal-trigger" href="#modal-select-image">Select Image For Display</a>
+
+		<!-- ABILITY MODAL -->
+		<div id="modal-select-image" class="modal">
+			<div class="modal-content">
+				<h4 style="text-align: center">Select Image</h4>
+				<h6 style="text-align: center">Not the image you will use for your character. Only for example use.</h6>
+
+				<p id="confirmed_image_selection"></p>
+				<button class="waves-effect waves-light btn red" style="width: 80%; float: center; text-align: center" onclick="remove_example_selection(this)" type="button">Remove Selection</button>
+				<br>
+				<div class="row">
+				    <div class="col s6">
+				        <!-- <div class="card blue-grey darken-1"> -->
+						<div class="card">
+			        	<div class="card-content">
+				        	<span class="card-title">Example 1</span>
+							<img class="card-super-image" id="example_one" src="https://drive.google.com/uc?export=view&id=13ts_6kOWHgMaKogG10_vsE_uy3doWs31" alt="Super Example 1">
+				        </div>
+				        <div class="card-action">
+							<button class="waves-effect waves-light btn" style="width: 80%; float: center; text-align: center" onclick="select_super_example_one(this)" type="button">Select</button>
+				        </div>
+				      </div>
+				    </div>
+
+					<div class="col s6">
+				        <!-- <div class="card blue-grey darken-1"> -->
+						<div class="card">
+			        	<div class="card-content">
+				        	<span class="card-title">Example 2</span>
+							<img class="card-super-image" id="example_two" src="https://drive.google.com/uc?export=view&id=1sy1ldf7AFArjQxvwKORyelc97_GtWRHD" alt="Super Example 2">
+				        </div>
+				        <div class="card-action">
+							<button class="waves-effect waves-light btn" style="width: 80%; float: center; text-align: center" onclick="select_super_example_two(this)" type="button">Select</button>
+				        </div>
+				      </div>
+				    </div>
+
+					<div class="col s6">
+				        <!-- <div class="card blue-grey darken-1"> -->
+						<div class="card">
+			        	<div class="card-content">
+				        	<span class="card-title">Example 3</span>
+							<img class="card-super-image" id="example_three" src="https://drive.google.com/uc?export=view&id=1obpRj_rgKNPYOp-DMf0gLh2PUDFKnnIR" alt="Super Example 3">
+				        </div>
+				        <div class="card-action">
+							<button class="waves-effect waves-light btn" style="width: 80%; float: center; text-align: center" onclick="select_super_example_three(this)" type="button">Select</button>
+				        </div>
+				      </div>
+				    </div>
+
+					<div class="col s6">
+				        <!-- <div class="card blue-grey darken-1"> -->
+						<div class="card">
+			        	<div class="card-content">
+				        	<span class="card-title">Example 4</span>
+							<img class="card-super-image" id="example_four" src="https://drive.google.com/uc?export=view&id=1_Lub_C1CF8K4wUOPVapv1dfv4H9Jo9Ah" alt="Super Example 4">
+				        </div>
+				        <div class="card-action">
+							<button class="waves-effect waves-light btn" style="width: 80%; float: center; text-align: center" onclick="select_super_example_four(this)" type="button">Select</button>
+				        </div>
+				      </div>
+				    </div>
+				  </div>
+				<br>
+
+				<div id="super_image_element" style="visibility: hidden">None</div>
+
+				<br><br><br><br>
+
+			</div>
+		</div>
+
+		<br><br>
+		<div class="col s2"></div>
+		<div class="container-card-display col s8" id="card_display_layout"></div>
+	</div>
+
 	<div class="row">
 		<div class="col s4"></div>
 		<div class="col s4">
 			<button class="waves-effect waves-light btn" style="width: 100%; float: center; text-align: center" onclick="display_super(this)" type="button">Display</button>
+			<br>
+			<p style="color:red;">* Does not display your Super Name, Ability Name and Defense Name.</p>
 		</div>
 		<div class="col s4"></div>
 		<!-- inputs for 1. main suit colors, 2. describe super powers, 3. gender, 4. describe physical features, 5. other additional information -->
 	</div>
 
-		</div>
-
-	<br>
-	<div class="container container-card-display" id="card_display_layout">
-
-	</div>
 	<br><br><br><br>
 
 	<script type="text/javascript">
@@ -362,13 +421,52 @@
 
 		// ALIGNMENT SELECTION
 		const alignmenthero = control => {
+			// ability
+			let ability_power = document.getElementById("selected_ability_power_add").textContent;
+			let ability_id = document.getElementById("selected_ability_skill_id").textContent;
+			let ability_type = document.getElementById("selected_ability_type").textContent;
+			let ability_category = document.getElementById("selected_ability_category").textContent;
+
+			// defense
+			let defense_power = document.getElementById("selected_defense_power_add").textContent;
+			let defense_id = document.getElementById("selected_defense_skill_id").textContent;
+			let defense_type = document.getElementById("selected_defense_type").textContent;
+			let defense_category = document.getElementById("selected_defense_category").textContent;
+
+			// power adjustment
+			let final_power_val = 0;
+
 			document.getElementById("alignment").innerHTML = alignments[0];
 			console.log("Set alignment to \"" + alignments[0] + "\".");
+
+			// re-calculate power
+			final_power_val = power_calculator(ability_id, ability_power, ability_type, ability_category, "Ability");
+			final_power_val = power_calculator(defense_id, defense_power, defense_type, defense_category, "Defense");
+
+			document.getElementById("super_power_value").innerHTML = Math.round(final_power_val);
 		}
 
 		const alignmentvillain = control => {
+			// ability
+			let ability_power = document.getElementById("selected_ability_power_add").textContent;
+			let ability_id = document.getElementById("selected_ability_skill_id").textContent;
+			let ability_type = document.getElementById("selected_ability_type").textContent;
+			let ability_category = document.getElementById("selected_ability_category").textContent;
+
+			// defense
+			let defense_power = document.getElementById("selected_defense_power_add").textContent;
+			let defense_id = document.getElementById("selected_defense_skill_id").textContent;
+			let defense_type = document.getElementById("selected_defense_type").textContent;
+			let defense_category = document.getElementById("selected_defense_category").textContent;
+
 			document.getElementById("alignment").innerHTML = alignments[1];
 			console.log("Set alignment to \"" + alignments[1] + "\".");
+
+			// re-calculate power
+			final_power_val = power_calculator(ability_id, ability_power, ability_type, ability_category, "Ability");
+			final_power_val = power_calculator(defense_id, defense_power, defense_type, defense_category, "Defense");
+
+			document.getElementById("super_power_value").innerHTML = Math.round(final_power_val);
 		}
 
 		// ABILITY FILTER BUTTON
@@ -437,8 +535,6 @@
 			let selected_ability_category = "";
 			let selected_ability_power_add = "";
 			let ability_power = "";
-			let defense_power = document.getElementById("selected_defense_power_add").textContent;
-			let super_power_val = 0;
 
 			fetch(url_abilities_defenses).then(result=>result.text()).then(function(csvtext) {
 				return csv().fromString(csvtext);
@@ -459,16 +555,17 @@
 				document.getElementById("selected_ability_type").innerHTML = selected_ability_type;
 				document.getElementById("selected_ability_category").innerHTML = selected_ability_category;
 				document.getElementById("selected_ability_effect").innerHTML = selected_ability_effect;
+				document.getElementById("skill_buffs").innerHTML = "";
 				// hidden values
 				document.getElementById("selected_ability_skill_id").innerHTML = selected_ability_id;
 				document.getElementById("selected_ability_power_add").innerHTML = selected_ability_power_add;
 				// update power
 				ability_power = selected_ability_power_add;
-				super_power_val = parseFloat(ability_power) + parseFloat(defense_power);
-				document.getElementById("super_power_value").innerHTML = Math.round(super_power_val);
-				// console.log(super_power_val);
 				// console.log(ability_power);
-				// console.log(defense_power);
+
+				final_power_val = power_calculator(selected_ability_id, ability_power, selected_ability_type, selected_ability_category, "Ability");
+
+				document.getElementById("super_power_value").innerHTML = Math.round(final_power_val);
 
 				console.log("Set ability effect to \"" + selected_ability_effect + "\".");
 			});
@@ -542,7 +639,16 @@
 			let selected_defense_power_add = "";
 			let ability_power = document.getElementById("selected_ability_power_add").textContent;
 			let defense_power = "";
-			let super_power_val = 0;
+			// let super_power_val = 0;
+			// let adjusted_defense_power = 0;
+			// let adjust_super_power_val = 0;
+			// let alignment = document.getElementById("alignment").textContent;
+			// let ability_type = document.getElementById("selected_ability_type").textContent;
+			// let synergy_boost = 1.05;
+			let final_power_val = 0;
+			// let ability_category = document.getElementById("selected_ability_category").textContent;
+			// let ability_id = document.getElementById("selected_ability_skill_id").textContent;
+
 
 			fetch(url_abilities_defenses).then(result=>result.text()).then(function(csvtext) {
 				return csv().fromString(csvtext);
@@ -568,15 +674,164 @@
 				document.getElementById("selected_defense_power_add").innerHTML = selected_defense_power_add;
 				// update power
 				defense_power = selected_defense_power_add;
-				super_power_val = parseFloat(ability_power) + parseFloat(defense_power);
-				document.getElementById("super_power_value").innerHTML = Math.round(super_power_val);
-				// console.log(super_power_val);
-				// console.log(ability_power);
 				// console.log(defense_power);
+
+				final_power_val = power_calculator(selected_defense_id, defense_power, selected_defense_type, selected_defense_category, "Defense");
+
+				document.getElementById("super_power_value").innerHTML = Math.round(final_power_val);
 
 				console.log("Set defense effect to \"" + selected_defense_effect + "\".");
 			});
 		}
+
+		const power_calculator = (skill_id, skill_power, skill_type, skill_category, skill_ability_defense) => {
+			// alignment
+			let alignment = document.getElementById("alignment").textContent;
+
+			// ability
+			let ability_power = document.getElementById("selected_ability_power_add").textContent;
+			let ability_id = document.getElementById("selected_ability_skill_id").textContent;
+			let ability_type = document.getElementById("selected_ability_type").textContent;
+			let ability_category = document.getElementById("selected_ability_category").textContent;
+
+			// defense
+			let defense_power = document.getElementById("selected_defense_power_add").textContent;
+			let defense_id = document.getElementById("selected_defense_skill_id").textContent;
+			let defense_type = document.getElementById("selected_defense_type").textContent;
+			let defense_category = document.getElementById("selected_defense_category").textContent;
+
+			// power values
+			let adjusted_ability_power = 0; // reset to 0
+			let adjusted_defense_power = 0; // reset to 0
+			let super_power_val = 0; // reset to 0
+			let adjusted_super_power_val = 0; // reset to 0
+			let synergy_boost = 1.1;
+			let final_power_val = 0; // reset to 0
+
+			// Ability v. Defense skills
+			if (skill_ability_defense == "Ability") {
+				// set new ability selected
+				ability_id = skill_id;
+				ability_power = skill_power;
+				ability_type = skill_type;
+				ability_category = skill_category;
+
+				// ABILITY - Hero v. Villain
+				if (alignment == "Hero") {
+					// villain abilities
+					if (ability_id == 32 || ability_id == 34) {
+						adjusted_ability_power = ability_power * 0.5;
+						document.getElementById("alignment_ability_tied").innerHTML = "*Ability Power Decrease Due To Alignment -50%*";
+					} else {
+						adjusted_ability_power = ability_power;
+						document.getElementById("alignment_ability_tied").innerHTML = "";
+					}
+				} else if (alignment == "Villain") {
+					// hero abilities
+				if (ability_id == 31 || ability_id == 33) {
+						adjusted_ability_power = ability_power * 0.5;
+						document.getElementById("alignment_ability_tied").innerHTML = "*Ability Power Decrease Due To Alignment -50%*";
+					} else {
+						adjusted_ability_power = ability_power;
+						document.getElementById("alignment_ability_tied").innerHTML = "";
+					}
+				}
+
+				console.log(adjusted_ability_power);
+
+				super_power_val = parseFloat(adjusted_ability_power) + parseFloat(defense_power);
+
+				console.log(super_power_val);
+
+			} else if (skill_ability_defense == "Defense") {
+				// set new ability selected
+				defense_id = skill_id;
+				defense_power = skill_power;
+				defense_type = skill_type;
+				defense_category = skill_category;
+
+				if (alignment == "Hero") {
+					// villain defense
+					if (defense_id == 27 || defense_id == 29) {
+						adjusted_defense_power = defense_power * 0.5;
+						document.getElementById("alignment_defense_tied").innerHTML = "*Defense Power Decrease Due To Alignment -50%*";
+					} else {
+						adjusted_defense_power = defense_power;
+						document.getElementById("alignment_defense_tied").innerHTML = "";
+					}
+				} else if (alignment == "Villain") {
+					// hero defense
+					if (defense_id == 26 || defense_id == 28) {
+						adjusted_defense_power = defense_power * 0.5;
+						document.getElementById("alignment_defense_tied").innerHTML = "*Defense Power Decrease Due To Alignment -50%*";
+					} else {
+						adjusted_defense_power = defense_power;
+						document.getElementById("alignment_defense_tied").innerHTML = "";
+					}
+				}
+
+				console.log(adjusted_defense_power);
+
+				super_power_val = parseFloat(ability_power) + parseFloat(adjusted_defense_power);
+
+				console.log(super_power_val);
+			}
+			console.log(ability_id + " " + defense_id);
+
+			// Unique combo calculations
+			if (ability_type == "None" && defense_id == 8) {
+				adjusted_super_power_val = super_power_val * 1.2;
+				document.getElementById("unique_combo").innerHTML = "*Unique Combo Power Boost - \"Achilles Heel\" +15%*";
+			} else if (ability_type == "None" && defense_type == "None") {
+				adjusted_super_power_val = super_power_val * 1.1;
+				document.getElementById("unique_combo").innerHTML = "*Unique Combo Power Boost - \"Just Power\" +10%*";
+			} else if (ability_id == 16 && defense_id == 4) {
+				adjusted_super_power_val = super_power_val * 2;
+				document.getElementById("unique_combo").innerHTML = "*Unique Combo Power Boost - \"Polar Opposites\" +100%*";
+			} else if (ability_id == 30 && defense_id == 19) {
+				adjusted_super_power_val = super_power_val * 1.2;
+				document.getElementById("unique_combo").innerHTML = "*Unique Combo Power Boost - \"Double Trigger Flip\" +20%*";
+			} else if (ability_id == 33 && defense_id == 26) {
+				adjusted_super_power_val = super_power_val * 1.15;
+				document.getElementById("unique_combo").innerHTML = "*Unique Combo Power Boost - \"Anti-Villain\" +15%*";
+			} else if (ability_id == 34 && defense_id == 27) {
+				adjusted_super_power_val = super_power_val * 1.15;
+				document.getElementById("unique_combo").innerHTML = "*Unique Combo Power Boost - \"Anti-Hero\" +15%*";
+			} else if (ability_id == 12 && defense_id == 12) {
+				adjusted_super_power_val = super_power_val * 2;
+				document.getElementById("unique_combo").innerHTML = "*Unique Combo Power Boost - \"The Tactician\" +100%*";
+			} else if (ability_id == 25 && defense_id == 2) {
+				adjusted_super_power_val = super_power_val * 1.25;
+				document.getElementById("unique_combo").innerHTML = "*Unique Combo Power Boost - \"Team Fighter\" +25%*";
+			} else if (super_power_val > 7) {
+				adjusted_super_power_val = super_power_val * 0.92;
+				document.getElementById("unique_combo").innerHTML = "";
+			} else if (super_power_val > 5 && super_power_val <= 7) {
+				adjusted_super_power_val = super_power_val * 0.95;
+				document.getElementById("unique_combo").innerHTML = "";
+			} else if (super_power_val <= 2) {
+				adjusted_super_power_val = super_power_val * 1.1;
+				document.getElementById("unique_combo").innerHTML = "";
+			} else {
+				adjusted_super_power_val = super_power_val;
+				document.getElementById("unique_combo").innerHTML = "";
+			}
+
+			console.log(adjusted_super_power_val);
+
+			// Skill Category Synergy
+			if (ability_category == defense_category) {
+				final_power_val = (adjusted_super_power_val * synergy_boost) * 0.85;
+				document.getElementById("skill_buffs").innerHTML = "*Ability & Defense Synergy Power Boost +10%*";
+			} else {
+				final_power_val = (adjusted_super_power_val * 0.85);
+				document.getElementById("skill_buffs").innerHTML = "";
+			}
+			console.log(final_power_val);
+
+			return final_power_val;
+		}
+
 
 		const reset_filter_ability = control => {
 			document.getElementById("all_abilities").innerHTML = "";
@@ -585,6 +840,37 @@
 		const reset_filter_defense = control => {
 			document.getElementById("all_defenses").innerHTML = "";
 		}
+
+		const select_super_example_one = control => {
+			console.log("Example 1 selected.");
+			document.getElementById("super_image_element").innerHTML = document.getElementById("example_one").src;
+			document.getElementById("confirmed_image_selection").innerHTML = "Example 1 selected."
+		}
+
+		const select_super_example_two = control => {
+			console.log("Example 2 selected.");
+			document.getElementById("super_image_element").innerHTML = document.getElementById("example_two").src;
+			document.getElementById("confirmed_image_selection").innerHTML = "Example 2 selected."
+		}
+
+		const select_super_example_three = control => {
+			console.log("Example 3 selected.");
+			document.getElementById("super_image_element").innerHTML = document.getElementById("example_three").src;
+			document.getElementById("confirmed_image_selection").innerHTML = "Example 3 selected."
+		}
+
+		const select_super_example_four = control => {
+			console.log("Example 4 selected.");
+			document.getElementById("super_image_element").innerHTML = document.getElementById("example_four").src;
+			document.getElementById("confirmed_image_selection").innerHTML = "Example 4 selected."
+		}
+
+		const remove_example_selection = control => {
+			console.log("Removed selection.");
+			document.getElementById("super_image_element").innerHTML = "None";
+			document.getElementById("confirmed_image_selection").innerHTML = "Removed selection."
+		}
+
 
 		const display_super = control => {
 			let super_name = document.getElementById("super_name").value;
@@ -600,7 +886,11 @@
 			let defense_id = document.getElementById("selected_defense_skill_id").textContent;
 
 			let card_asset_items = [];
+			let image_tag_start = "<img src=\"";
+			let image_tag_end = "\" alt=\"card example template - create version\" class=\"image-assets\">";
 			let card_base_layout;
+			let card_example_label;
+			let card_gray_backgound;
 			let set_card_asset_alignment;
 			let set_card_asset_power_value;
 			let set_card_asset_ability_type;
@@ -610,6 +900,8 @@
 			let set_ability_effect;
 			let set_defense_name;
 			let set_defense_effect;
+			let set_image_example;
+			let super_name_base;
 
 			// reset card display
 			document.getElementById("card_display_layout").innerHTML = "";
@@ -625,18 +917,42 @@
 				});
 
 				// SET CARD ASSETS
+				// IMAGE EXAMPLE
+				if (document.getElementById("super_image_element").textContent != "None") {
+					set_image_example = image_tag_start
+						+ document.getElementById("super_image_element").textContent
+						+ image_tag_end;
+					// console.log(set_image_example);
+				} else {
+					set_image_example = "";
+				}
+
 				// CARD TEMPLATE
-				card_base_layout = "<img src=\""
+				card_base_layout = image_tag_start
 					+ card_asset_items[0].asset_image
-					+ "\" alt=\"card template - create\" class=\"image-assets\">";
+					+ image_tag_end;
+
+				// GRAY BACKGOUND
+				card_gray_backgound = image_tag_start
+					+ card_asset_items[1].asset_image
+					+ image_tag_end;
+
+				super_name_base = image_tag_start
+					+ card_asset_items[3].asset_image
+					+ image_tag_end;
+
+				// EXAMPLE LABEL BACKGOUND
+				card_example_label = image_tag_start
+					+ card_asset_items[2].asset_image
+					+ image_tag_end;
 
 				// ALIGNMENT
 				for (i=0; i < card_asset_items.length; i++) {
 					if (card_asset_items[i].card_asset == "Alignment" && card_asset_items[i].value == alignment) {
 						// console.log(card_asset_items[i].asset_image);
-						set_card_asset_alignment = "<img src=\""
+						set_card_asset_alignment = image_tag_start
 							+ card_asset_items[i].asset_image
-							+ "\" alt=\"card template - create\" class=\"image-assets\">";
+							+ image_tag_end;
 					}
 				};
 
@@ -644,9 +960,9 @@
 				for (i=0; i < card_asset_items.length; i++) {
 					if (card_asset_items[i].card_asset == "Power Value" && card_asset_items[i].value == power) {
 						// console.log(card_asset_items[i].asset_image);
-						set_card_asset_power_value = "<img src=\""
+						set_card_asset_power_value = image_tag_start
 							+ card_asset_items[i].asset_image
-							+ "\" alt=\"card template - create\" class=\"image-assets\">";
+							+ image_tag_end;
 					}
 				};
 
@@ -654,39 +970,83 @@
 				for (i=0; i < card_asset_items.length; i++) {
 					if (card_asset_items[i].card_asset == "Ability Type" && card_asset_items[i].value == ability_type) {
 						// console.log(card_asset_items[i].asset_image);
-						set_card_asset_ability_type = "<img src=\""
+						set_card_asset_ability_type = image_tag_start
 							+ card_asset_items[i].asset_image
-							+ "\" alt=\"card template - create\" class=\"image-assets\">";
+							+ image_tag_end;
+					} else if (ability_type == "None") {
+						set_card_asset_ability_type = "";
 					}
 				};
 
 				// DEFENSE TYPE
 				for (i=0; i < card_asset_items.length; i++) {
 					if (card_asset_items[i].card_asset == "Defense Type" && card_asset_items[i].value == defense_type) {
-						console.log(card_asset_items[i].asset_image);
-						set_card_asset_defense_type = "<img src=\""
+						// console.log(card_asset_items[i].asset_image);
+						set_card_asset_defense_type = image_tag_start
 							+ card_asset_items[i].asset_image
-							+ "\" alt=\"card template - create\" class=\"image-assets\">";
+							+ image_tag_end;
+					} else if (defense_type == "None") {
+						set_card_asset_defense_type = "";
 					}
 				};
 
 				set_super_name = "<div class=\"text-super-name base-card-text\">" + super_name + "</div>";
-				set_ability_name = "<div class=\"skill-card-text base-card-text text-ability-name\">" + ability_name + "</div>";
-				set_ability_effect = "<div class=\"skill-card-text base-card-text text-ability-effect\">" + ability_effect + "</div>";
-				set_defense_name = "<div class=\"skill-card-text base-card-text text-defense-name\">" + defense_name + "</div>";
-				set_defense_effect = "<div class=\"skill-card-text base-card-text text-defense-effect\">" + defense_effect + "</div>";
+
+				// set_ability_name = "<div class=\"skill-card-text base-card-text text-ability-name\">" + ability_name + "</div>";
+				if (ability_effect != "None") {
+					set_ability_name = "<div class=\"skill-card-text base-card-text text-ability-name\">" + ability_name + "</div>";
+				} else { set_ability_name = ""; }
+
+				// set_ability_effect = "<div class=\"skill-card-text base-card-text text-ability-effect\">" + ability_effect + "</div>";
+				// if (ability_effect != "None") {
+				// 	set_ability_effect = "<div class=\"skill-card-text base-card-text text-ability-effect\">" + ability_effect + "</div>";
+				// } else { set_ability_effect = ""; }
+				for (i=0; i < card_asset_items.length; i++) {
+					if (card_asset_items[i].card_asset == "Ability Effect" && card_asset_items[i].value == ability_id) {
+						// console.log(card_asset_items[i].asset_image);
+						set_ability_effect = image_tag_start
+							+ card_asset_items[i].asset_image
+							+ image_tag_end;
+					} else if (ability_type == "None") {
+						set_ability_effect = "";
+					}
+				};
+
+				for (i=0; i < card_asset_items.length; i++) {
+					if (card_asset_items[i].card_asset == "Defense Effect" && card_asset_items[i].value == defense_id) {
+						// console.log(card_asset_items[i].asset_image);
+						set_defense_effect = image_tag_start
+							+ card_asset_items[i].asset_image
+							+ image_tag_end;
+					} else if (defense_type == "None") {
+						set_defense_effect = "";
+					}
+				};
+				console.log(defense_type);
+				// set_defense_name = "<div class=\"skill-card-text base-card-text text-defense-name\">" + defense_name + "</div>";
+				// if (defense_effect != "None") {
+				// 	set_defense_name = "<div class=\"skill-card-text base-card-text text-defense-name\">" + defense_name + "</div>";
+				// } else { set_defense_name = ""; }
 
 				// SETUP CARD
-				document.getElementById("card_display_layout").innerHTML = card_base_layout;
+				document.getElementById("card_display_layout").innerHTML = card_gray_backgound;
+				document.getElementById("card_display_layout").innerHTML += set_image_example;
+				document.getElementById("card_display_layout").innerHTML += card_base_layout;
+				document.getElementById("card_display_layout").innerHTML += super_name_base;
 				document.getElementById("card_display_layout").innerHTML += set_card_asset_alignment;
 				document.getElementById("card_display_layout").innerHTML += set_card_asset_power_value;
 				document.getElementById("card_display_layout").innerHTML += set_card_asset_ability_type;
 				document.getElementById("card_display_layout").innerHTML += set_card_asset_defense_type;
-				document.getElementById("card_display_layout").innerHTML += set_super_name;
-				document.getElementById("card_display_layout").innerHTML += set_ability_name;
+
+				// doesn't work as intended due to css
+				// document.getElementById("card_display_layout").innerHTML += set_super_name;
+				// document.getElementById("card_display_layout").innerHTML += set_ability_name;
 				document.getElementById("card_display_layout").innerHTML += set_ability_effect;
-				document.getElementById("card_display_layout").innerHTML += set_defense_name;
+				// document.getElementById("card_display_layout").innerHTML += set_defense_name;
 				document.getElementById("card_display_layout").innerHTML += set_defense_effect;
+
+				document.getElementById("card_display_layout").innerHTML += card_example_label;
+
 
 				console.log("Display card generated.");
 			});
